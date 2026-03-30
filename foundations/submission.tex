@@ -1,0 +1,102 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[cm]{fullpage}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{xspace}
+\usepackage[english]{babel}
+\usepackage{fancyhdr}
+\usepackage{titling}
+\usepackage{framed}
+\usepackage{stmaryrd}
+\usepackage{mathpartir}
+\renewcommand{\thesection}{Task \projnumber.\arabic{section}:}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%         exercise-specific macros       %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\xorshift}{\texttt{xorshift128+}}
+\newcommand{\step}{\rightarrow}
+\newcommand{\nstep}{\overset{*}{\rightarrow}}
+\newcommand{\update}[3]{#1[#2 \mapsto #3]}
+\newcommand{\run}[2]{\llbracket #1 \rrbracket #2}
+\newcommand{\loweq}{\mathbin{=_L}}
+
+\newcommand{\config}[1]{\ensuremath{\left\langle #1 \right\rangle}\xspace}
+\newcommand{\ttt}[1]{\texttt{#1}}
+\newcommand{\proves}{\vdash}
+\newcommand{\sth}{\ensuremath{.\;}\xspace}
+\newcommand\set[1]{\ensuremath{\{#1\}}}
+\newcommand{\WHILE}[1]{\ensuremath{\mathsf{while}\ #1 \ \mathsf{do}}\xspace}
+\newcommand{\IF}{\ensuremath{\mathsf{if}}\xspace}
+\newcommand{\THEN}{\ensuremath{\mathsf{then}}\xspace}
+\newcommand{\ELSE}{\ensuremath{\mathsf{else}}\xspace}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% This part needs customization from you %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% please enter your name and matriculation number here
+%TODO
+\newcommand{\name}{Your names}
+\newcommand{\matriculation}{Your matriculation number}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%           End of customization         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\projnumber}{1}
+\newcommand{\Title}{Foundations: Z3 and Lean}
+\setlength{\headheight}{15.2pt}
+\setlength{\headsep}{20pt}
+\setlength{\textheight}{680pt}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{Project \projnumber\ -- \Title}
+\fancyhead[C]{}
+\fancyhead[R]{\name{} (\matriculation)}
+\renewcommand{\headrulewidth}{0.4pt}
+\fancyfoot[C]{\thepage}
+
+
+\begin{document}
+\thispagestyle{empty}
+\noindent\framebox[\linewidth]{%
+ \begin{minipage}{\linewidth}%
+ \hspace*{5pt} \textbf{Formal Methods for Security and Privacy (SS26)} \hfill Prof.~Matteo Maffei \hspace*{5pt}\\
+
+ \begin{center}
+  {\bf\Large Project \projnumber~-- \Title}
+ \end{center}
+
+ \vspace*{5pt}\hspace*{5pt}\name{} (\matriculation) \hfill TU Wien \hspace*{5pt}
+ \end{minipage}%
+ }
+\vspace{0.5cm}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% README
+% remember to fill the macros \matriculation and \name
+
+\subsection*{Project Task 4.2: Predicting the Next Random Numbers}
+% Write here your notes, if any, for the xorshift prediction task.
+% You can specify
+% ---
+% as the section content if you don't have any note.
+
+\subsection*{Project Task 4.3: Horn-Clause-Based Abstraction - DO-WHILE}
+% This section is required!
+% Present and discuss your Horn-clause encoding, research the difference between
+% small-step and big-step semantics, and discuss the nature of the semantics
+% of DO-WHILE.
+
+\subsection*{Project Task 5.1: Proving Properties of xorshift}
+% Write here your notes, if any, for the Lean proof task.
+% You can specify
+% ---
+% as the section content if you don't have any note.
+
+\end{document}

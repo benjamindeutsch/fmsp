@@ -1,0 +1,11 @@
+name = "foundation"
+version = "26.0.0"
+defaultTargets = ["xorshift"]
+buildType = "debug"
+
+[[lean_lib]]
+name = "xorshift"
+
+[[lean_exe]]
+name = "xorshift-exec"
+root = "xorshift"
