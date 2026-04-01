@@ -106,8 +106,7 @@ def xorshift'' : XorShiftState → XorShiftState :=
 
 /-- ## TASK 1 (0.5 pts): Prove that functional and compositional representations are equivalent.
     **Hint**: This is true by definition since both are structurally the same computation. -/
-theorem xorshift'_is_xorshift'': xorshift' = xorshift'' := by
-  sorry
+theorem xorshift'_is_xorshift'': xorshift' = xorshift'' := rfl /-Prove using reflexivity-/
 
 /-- Combines the two equivalences: imperative = functional = compositional. -/
 theorem xorshift_is_xorshift'': xorshift = xorshift'' := by
@@ -127,13 +126,29 @@ def swap_state (s: XorShiftState) : XorShiftState := ⟨s.state1, s.state0⟩
     Use the `unfold` tactic to expand swap_state, then apply `XorShiftState.ext`
     directly or using the `ext` tactic -/
 theorem swap_state_inv : ∀ s, swap_state (swap_state s) = s := by
-  sorry
+  unfold swap_state
+  /-⊢ ∀ (s : XorShiftState), (XorShiftState.state1 (s.state1, s.state0), XorShiftState.state0 (s.state1, s.state0)) = s-/
+  intro s
+  /-⊢ (XorShiftState.state1 (s.state1, s.state0), XorShiftState.state0 (s.state1, s.state0)) = s-/
+  ext
+  /-Goal 1: ⊢ (XorShiftState.state1 (s.state1, s.state0), XorShiftState.state0 (s.state1, s.state0)).fst[i✝] = s.fst[i✝]-/
+  /-Goal 2: ⊢ (XorShiftState.state1 (s.state1, s.state0), XorShiftState.state0 (s.state1, s.state0)).snd[i✝] = s.snd[i✝]-/
+  all_goals rfl
+
+
 
 /-- ## TASK 3 (0.25 pts): Prove that shifting by precision left or right is equivalent.
     For any p-bit vector s, shifting right by p equals shifting left by p.
     **Hint**:  Use `ext` to prove bitwise equality. -/
 theorem shift_precision : ∀ (p: Nat) (s: BitVec p), s >>> p = s <<< p := by
-  sorry
+  intro p s
+  /-⊢ s >>> p = s <<< p-/
+  ext
+  /-⊢ (s >>> p)[i✝] = (s <<< p)[i✝]-/
+  simp
+  /-Uses the following theorems to prove the bitwise equality:
+  [BitVec.getElem_ushiftRight, Nat.le_add_right, BitVec.getLsbD_of_ge, Std.le_refl,
+    BitVec.shiftLeft_eq_zero, BitVec.getElem_zero]-/
 
 
 --------------------------------------------------------------------------------
@@ -153,7 +168,17 @@ def IsLinear (f: XorShiftState → XorShiftState): Prop :=
     **Hint**: Start by unfolding the IsLinear definition, then unfold `Function.comp`. -/
 theorem IsLinear.comp {f g: XorShiftState → XorShiftState}
   (hf: IsLinear f) (hg: IsLinear g) : IsLinear (f ∘ g) := by
-    sorry
+    unfold IsLinear
+    /-⊢ ∀ (s₁ s₂ : XorShiftState), (f ∘ g) (s₁ ^^^ s₂) = (f ∘ g) s₁ ^^^ (f ∘ g) s₂-/
+    intro s1 s2
+    /-⊢ (f ∘ g) (s1 ^^^ s2) = (f ∘ g) s1 ^^^ (f ∘ g) s2-/
+    unfold Function.comp
+    /-⊢ f (g (s1 ^^^ s2)) = f (g s1) ^^^ f (g s2)-/
+    rw[hg]
+    /-⊢ f (g s1 ^^^ g s2) = f (g s1) ^^^ f (g s2)-/
+    rw[hf]
+    /-⊢ f (g s1) ^^^ f (g s2) = f (g s1) ^^^ f (g s2)-/
+
 
 
 /-- ## TASK 5 (1.5 pts): Prove that xorshift is linear.
@@ -161,7 +186,56 @@ theorem IsLinear.comp {f g: XorShiftState → XorShiftState}
     You will need to prove that each component function in the composition is linear.
     Apply `ext` and use the `simp` or `grind` tactic to prove the bitwise equalities. -/
 theorem xorshiftstate_is_linear: IsLinear xorshift := by
-  sorry
+  rw[xorshift_is_xorshift'']
+  /-⊢ IsLinear xorshift''-/
+  unfold xorshift''
+  /-⊢ IsLinear
+    ((fun s => (s.state0, s.state1 ^^^ s.state0 >>> 26)) ∘
+      (fun s => (s.state0, s.state1 ^^^ s.state0)) ∘
+        (fun s => (s.state0, s.state1 ^^^ s.state1 >>> 17)) ∘
+          (fun s => (s.state0, s.state1 ^^^ s.state1 <<< 23)) ∘ fun s => (s.state1, s.state0))-/
+  apply IsLinear.comp
+  · -- ⊢ IsLinear fun s => (s.state0, s.state1 ^^^ s.state0 >>> 26)
+    -- Let f1 := fun s => (s.state0, s.state1 ^^^ s.state0 >>> 26)
+    unfold IsLinear
+    -- ⊢ ∀ (s₁ s₂ : XorShiftState), f1(s₁ ^^^ s₂) = f1(s₁) ^^^ f1(s₂)
+    intro s1 s2
+    -- ⊢ f1(s1 ^^^ s2) = f1(s1) ^^^ f1(s2)
+    ext
+    · simp -- ⊢ f1(s1 ^^^ s2).fst[i✝] = (f1(s1) ^^^ f1(s2)).fst[i✝]
+    · simp; grind -- ⊢ f1(s1 ^^^ s2).snd[i✝] = (f1(s1) ^^^ f1(s2)).snd[i✝]
+                  -- needs grind since this part of the function is more complex
+  apply IsLinear.comp
+  · -- ⊢ IsLinear fun s => (s.state0, s.state1 ^^^ s.state0)
+    unfold IsLinear
+    intro s1 s2
+    ext
+    · simp
+    · simp; grind
+  apply IsLinear.comp
+  · -- ⊢ IsLinear fun s => (s.state0, s.state1 ^^^ s.state1 >>> 17)
+    unfold IsLinear
+    intro s1 s2
+    ext
+    · simp
+    · simp; grind
+  apply IsLinear.comp
+  · -- ⊢ IsLinear fun s => (s.state0, s.state1 ^^^ s.state1 <<< 23)
+    unfold IsLinear
+    intro s1 s2
+    ext
+    · simp
+    · simp; grind
+  -- ⊢ IsLinear fun s => (s.state1, s.state0)
+  unfold IsLinear
+  intro s1 s2
+  simp
+
+
+
+
+
+
 
 /-
   You can test the xorshift function by running `lake exec xorshift-exec`!
