@@ -231,12 +231,6 @@ theorem xorshiftstate_is_linear: IsLinear xorshift := by
   intro s1 s2
   simp
 
-
-
-
-
-
-
 /-
   You can test the xorshift function by running `lake exec xorshift-exec`!
 -/
