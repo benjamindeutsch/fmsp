@@ -40,9 +40,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % please enter your name and matriculation number here
-%TODO
-\newcommand{\name}{Your names}
-\newcommand{\matriculation}{Your matriculation number}
+\newcommand{\name}{Benjamin Deutsch}
+\newcommand{\matriculation}{12215881}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %           End of customization         %
@@ -82,21 +81,44 @@
 % remember to fill the macros \matriculation and \name
 
 \subsection*{Project Task 4.2: Predicting the Next Random Numbers}
-% Write here your notes, if any, for the xorshift prediction task.
-% You can specify
-% ---
-% as the section content if you don't have any note.
+---
 
 \subsection*{Project Task 4.3: Horn-Clause-Based Abstraction - DO-WHILE}
-% This section is required!
-% Present and discuss your Horn-clause encoding, research the difference between
-% small-step and big-step semantics, and discuss the nature of the semantics
-% of DO-WHILE.
+\begin{enumerate}
+    \item We can encode the DO-WHILE loop using the following Horn clauses:
+    \begin{align*}
+        \{&S_{pc}(\bar v) \Rightarrow S_{pc'}(\bar v) \\
+        &E_{pc'}(\bar v)\land \mathrm{EXPR}\neq 0 \Rightarrow S_{pc}(\bar v) \\
+        &E_{pc'}(\bar v)\land \mathrm{EXPR} = 0 \Rightarrow E_{pc}(\bar v)\}
+    \end{align*}
+
+    These clauses can be translated into the following z3-python pseudo-code for $pc=1$ and $pc'=2$:
+    \begin{verbatim}
+    [
+      ForAll([v_1,...,v_n],
+        Implies( S1(v_1,...,v_n), S2(v_1,...,v_n) ),
+      ForAll([v_1,...,v_n],
+        Implies(
+          And( E2(v_1,...,v_n), EXPR ),
+          S1(v_1,...,v_n) ))
+      ForAll([v_1,...,v_n],
+        Implies(
+          And( E2(v_1,...,v_n), Not(EXPR) ),
+          E1(v_1,...,v_n) ))
+    ]
+    \end{verbatim}
+
+    \item $S_{pc}(\bar v) \Rightarrow S_{pc'}(\bar v)$ makes sure that when we the loop is executed, the $\mathrm{CMD}$ is immediately executed. $E_{pc'}(\bar v)\land \mathrm{EXPR}\neq 0 \Rightarrow S_{pc}(\bar v)$ means that after execution of $\mathrm{CMD}$, given that $\mathrm{EXPR}$ evaluates to true, the loop is executed again. $E_{pc'}(\bar v)\land \mathrm{EXPR} = 0 \Rightarrow E_{pc}(\bar v)$ means that after execution of $\mathrm{CMD}$, given that $\mathrm{EXPR}$ evaluates to false, the loop is not executed again. This resembles the semantics of the DO-WHILE loop.
+
+    \item Small-step semantics are rules that resemble a single step of computation. Given a program and a state, one evaluates the program execution step-by-step. In big-step semantics the evaluation of a program is described as a relation (often denoted as $\Downarrow$) between a program with its state and its final result. Using small-step semantics one can define the big-step semantics as the following: \[\langle \textrm{PROGRAM},\sigma\rangle \Downarrow \sigma' \Leftrightarrow \langle\textrm{PROGRAM},\sigma\rangle \overset{*}{\hookrightarrow} \langle\epsilon,\sigma'\rangle.\] 
+
+    \item I would say that, since the premise $\langle \mathrm{CMD},\sigma\rangle \overset{*}{\hookrightarrow} \langle\epsilon,\sigma'\rangle$ can include multiple steps of computation, this rule is not a pure small-step rule. It is also not a pure big-step rule, since the conclusion relates programs with their states to programs with their states, like a small-step semantics rule.
+
+    The rule has elements from both small-step and big-step semantics.
+\end{enumerate}
+
 
 \subsection*{Project Task 5.1: Proving Properties of xorshift}
-% Write here your notes, if any, for the Lean proof task.
-% You can specify
-% ---
-% as the section content if you don't have any note.
+---
 
 \end{document}
