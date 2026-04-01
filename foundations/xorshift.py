@@ -112,13 +112,14 @@ def solve(observed: list[z3.AstRef]) -> list[float] | None:
         model = solver.model()
         predicted_values = []
         for i in range(EXPECTED_COUNT):
+            # Get the predicted output
             _, _, out = XorShift128(states[i][0], states[i][1])
             predicted_fp = ToDouble(out)
 
             # Convert predicted_fp to python float
             bv = model.eval(z3.fpToIEEEBV(predicted_fp))
             bits = bv.as_long()
-            # Pack as unsigned long long and unpack as double
+            # Interpret the bits as a double: Pack as unsigned long long and unpack as double
             python_float = struct.unpack('d', struct.pack('Q', bits))[0]
 
             predicted_values.insert(0, python_float)
