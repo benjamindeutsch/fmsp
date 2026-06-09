@@ -1,0 +1,22 @@
+lwinner = -1;
+lnotifyCode = 0;
+
+IF hbidA < hbidB THEN
+  lwinner = 1
+ELSE
+  IF hbidB < hbidA THEN
+    lwinner = 0
+  ELSE
+    lwinner = 2
+  END
+END;
+
+IF lwinner == 0 THEN
+  lnotifyCode = 10
+ELSE
+  IF lwinner == 1 THEN
+    lnotifyCode = 20
+  ELSE
+    lnotifyCode = 30
+  END
+END

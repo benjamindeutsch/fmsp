@@ -1,0 +1,15 @@
+name = "leanspi"
+version = "0.1.0"
+defaultTargets = ["leanspi"]
+#buildType = "debug"
+
+[[require]]
+name = "mathlib"
+git = "https://github.com/leanprover-community/mathlib4.git"
+
+[[lean_lib]]
+name = "Leanspi"
+
+[[lean_exe]]
+name = "leanspi"
+root = "Main"

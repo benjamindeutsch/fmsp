@@ -1,0 +1,60 @@
+(* channel *)
+free c:channel.
+
+type id.
+type key.
+type nonce.
+
+(* identifiers *)
+free A,B:id.
+
+(* Symmetric Encryption *)
+fun encrypt(bitstring, key):bitstring.
+fun decrypt(bitstring, key):bitstring
+  reduc forall m:bitstring, k:key; decrypt(encrypt(m,k),k)=m.
+
+event beginA(id, id, bitstring).
+event beginB(id, id, bitstring).
+event endA(id, id, bitstring).
+event endB(id, id, bitstring).
+
+(* Alice *)
+let alice(idA:id, idB:id, kAB:key)=
+  in(c, mB:bitstring);
+  let (=idA, m:bitstring, n:nonce) = decrypt(mB, kAB) in
+  event endA (idA,idB,m);
+  event beginA (idA,idB,m);
+  out(c, n);
+  0.
+
+
+(* Bob *)
+let bob(idA:id, idB:id, kAB:key)=
+  new n:nonce; new m:bitstring;
+  event beginB (idA,idB,m);
+  out (c,encrypt((idA,m,n),kAB));
+  in (c, =n);
+  event endB(idA,idB,m).
+
+query id1:id, id2:id, xm:bitstring;
+  event(endB(id1,id2,xm)).
+query id1:id, id2:id, xm:bitstring;
+  event(endB(id1,id2,xm)) ==> event(beginA(id1,id2,xm)).
+query id1:id, id2:id, xm:bitstring;
+  event(endB(id1,id2,xm)) ==> inj-event(beginA(id1,id2,xm)).
+query id1:id, id2:id, xm:bitstring;
+  event(endA(id1,id2,xm)) ==> event(beginB(id1,id2,xm)).
+query id1:id, id2:id, xm:bitstring; (* false *)
+  event(endA(id1,id2,xm)) ==> inj-event(beginB(id1,id2,xm)).
+
+process
+  new kAB:key;
+  !( (alice(A, B, kAB) | bob(A, B, kAB))
+    | (alice(B, A, kAB) | bob(B, A, kAB))
+  )
+
+(*
+  NB: I (arbitraily) decided that `m` will be a "message" (no necessarily random)
+  hence it is a bitstring and `n` random nonce. This is just a some semantic for
+  the user, proverif will ignore it (unless `ingnoreTypes` is set to false)
+*)

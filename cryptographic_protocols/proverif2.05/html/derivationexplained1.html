@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+                      <html>
+                    <head>
+                    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+                    <title>ProVerif: derivation for query 1</title>
+                    <link rel="stylesheet" href="cssproverif.css">
+                                                                           </head>
+                                                                         <body>
+                                                                         <H1>Explained derivation</H1>
+
+<ol>
+
+<li><a name=step1>The message <span class="fun">enc</span>(<span class="fun"></span>(<span class="name">B</span>[],<span class="name">m1</span>[],<span class="name">n</span>[]),<span class="name">k</span>[]) may be sent to the attacker at output <a href="process_1.html#occ8" target="process" class="occ">{8}</a>.<br>
+<span class="pred">attacker</span>(<span class="fun">enc</span>(<span class="fun"></span>(<span class="name">B</span>[],<span class="name">m1</span>[],<span class="name">n</span>[]),<span class="name">k</span>[])).<br>
+
+<li><a name=step2>The message <span class="fun">enc</span>(<span class="fun"></span>(<span class="name">B</span>[],<span class="name">m1</span>[],<span class="name">n</span>[]),<span class="name">k</span>[]) that the attacker may have by <a href="#step1">1</a> may be received at input <a href="process_1.html#occ15" target="process" class="occ">{15}</a>.<br>
+So event <span class="fun">end1</span>(<span class="name">A</span>[],<span class="name">B</span>[],<span class="name">m1</span>[]) may be executed at <a href="process_1.html#occ17" target="process" class="occ">{17}</a>.<br>
+<span class="pred">event</span>(<span class="fun">end1</span>(<span class="name">A</span>[],<span class="name">B</span>[],<span class="name">m1</span>[])).<br>
+
+<li><a name=step3>By <a href="#step2">2</a>, <span class="pred">event</span>(<span class="fun">end1</span>(<span class="name">A</span>[],<span class="name">B</span>[],<span class="name">m1</span>[])).<br>
+The goal is reached, represented in the following fact:<br>
+<span class="pred">event</span>(<span class="fun">end1</span>(<span class="name">A</span>[],<span class="name">B</span>[],<span class="name">m1</span>[])).<br>
+
+</ol>
+</body>
+</html>

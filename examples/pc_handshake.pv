@@ -1,0 +1,74 @@
+(* channel *)
+free c:channel.
+
+(* types *)
+type id.
+type rand.
+type key.
+
+(* identifiers *)
+free A,B:id.
+
+(* declaring the events *)
+event end(id, id, bitstring).
+event begin(id, id, bitstring).
+
+
+(* Symmetric Encryption *)
+fun encrypt(bitstring, key):bitstring.
+fun decrypt(bitstring, key):bitstring
+  reduc forall m:bitstring, k:key; decrypt(encrypt(m,k),k)=m.
+
+
+(*========================================================*)
+(*======================== queries =======================*)
+(*========================================================*)
+
+query id1:id, id2:id, m1:bitstring; event(end(id1,id2,m1)). (* reachablility *)
+(*
+  This is a very useful query to make sure your protocol functions as intended.
+  If this query fails, then the other are likely to return true simply because
+        false ==> whatever
+
+  Note that proverif actually queries "not(event(...))". So we exect proverif
+  to return "false" here. With a trace telling us how to reach the event.
+
+  reachability querie are very useful to ensure your protocol can by executed
+  as intended. A good debugging strategy is to check for the reachability of some
+  dummy event `test` until your reach a point where proverif fails to build a
+  trace.
+*)
+
+query id1:id, id2:id, m1:bitstring; (* non-injective agreement *)
+  event(end(id1,id2,m1)) ==> event(begin(id1,id2,m1)).
+query id1:id, id2:id, m1:bitstring; (* injective agreement *)
+  event(end(id1,id2,m1)) ==> inj-event(begin(id1,id2,m1)).
+
+(*========================================================*)
+(*============== description of the protocol =============*)
+(*========================================================*)
+
+(* Alice *)
+let alice(idA:id, idB:id, kAB:key)=
+  in (c, n:rand);
+  new m:bitstring;
+  event begin(idA,idB,m);
+  out(c, encrypt((idA,m,n),kAB));
+  0.
+
+
+(* Bob *)
+let bob(idA:id, idB:id, kAB:key)=
+  new n:id;
+  out (c,n);
+  in (c, mA:bitstring);
+  let (=idA, m:bitstring, =n) = decrypt(mA, kAB) in
+    (* ^^^^ here we are asking proverif to imediatly try and match the term with
+            idA. *)
+  event end(idA,idB,m).
+
+
+process
+  new kAB:key;
+  !(alice(A, B, kAB) | bob(A, B, kAB))
+  | !(alice(B, A, kAB) | bob(B, A, kAB))

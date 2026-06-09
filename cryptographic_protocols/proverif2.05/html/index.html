@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+                      <html>
+                    <head>
+                    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+                    <title>ProVerif: main result page</title>
+                    <link rel="stylesheet" href="cssproverif.css">
+                                                                           </head>
+                                                                         <body>
+                                                                         <H1>ProVerif results</H1>
+<A HREF="process_0.html" TARGET="process">Process 0</A> (that is, the initial process)<br>
+<UL>
+<LI><A HREF="process_1.html" TARGET="process">Process 1</A> (that is, <A HREF="process_0.html" TARGET="process">process 0</A>, with let moved downwards)<br>
+<UL> <LI><span class="query">Query inj-event(<span class="fun">end2</span>(<span class="var">A_3</span>,<span class="var">B_3</span>,<span class="var">m</span>)) <span class="conn">==&gt;</span> inj-event(<span class="fun">begin2</span>(<span class="var">A_3</span>,<span class="var">B_3</span>,<span class="var">m</span>)) in <A HREF="process_1.html" TARGET="process">process 1</A>.<br>
+</span>
+<A HREF="clauses1.html" TARGET="clauses">Clauses</A><br>
+<A HREF="compclauses1.html">Completed clauses</A><br>
+<UL>
+<LI>goal reachable: <span class="pred">b-inj-event</span>(<span class="fun">begin2</span>(<span class="name">A</span>[],<span class="name">B</span>[],<span class="var">m2_2</span>),<span class="var">@occ20_1</span>) <span class="conn">-&gt;</span> <span class="pred">inj-event</span>(<span class="fun">end2</span>(<span class="name">A</span>[],<span class="name">B</span>[],<span class="var">m2_2</span>),<span class="var">@occ11_1</span>)<br>
+The hypothesis occurs strictly before the conclusion.<br>
+Abbreviations:
+<ul>
+
+<li><span class="var">m2_2</span> <span class="conn">=</span> <span class="name">m2_1</span>[cipher_1 = <span class="fun">enc</span>(<span class="fun"></span>(<span class="name">B</span>[],<span class="name">m1</span>[],<span class="name">n</span>[]),<span class="name">k</span>[])]
+<li><span class="var">@occ11_1</span> <span class="conn">=</span> <span class="name">@occ11</span>[cipher = <span class="fun">enc</span>(<span class="fun"></span>(<span class="name">A</span>[],<span class="var">m2_2</span>,<span class="name">n</span>[]),<span class="name">k</span>[])]
+<li><span class="var">@occ20_1</span> <span class="conn">=</span> <span class="name">@occ20</span>[cipher_1 = <span class="fun">enc</span>(<span class="fun"></span>(<span class="name">B</span>[],<span class="name">m1</span>[],<span class="name">n</span>[]),<span class="name">k</span>[])]
+</ul>
+</UL>
+<span class="result">RESULT inj-event(<span class="fun">end2</span>(<span class="var">A_3</span>,<span class="var">B_3</span>,<span class="var">m</span>)) <span class="conn">==&gt;</span> inj-event(<span class="fun">begin2</span>(<span class="var">A_3</span>,<span class="var">B_3</span>,<span class="var">m</span>)) is <span class="trueresult">true</span>.</span><br>
+<LI><span class="query">Query inj-event(<span class="fun">begin2</span>(<span class="var">A_3</span>,<span class="var">B_3</span>,<span class="var">m</span>)) <span class="conn">==&gt;</span> inj-event(<span class="fun">end1nomsg</span>(<span class="var">A_3</span>,<span class="var">B_3</span>)) in <A HREF="process_1.html" TARGET="process">process 1</A>.<br>
+</span>
+<A HREF="clauses2.html" TARGET="clauses">Clauses</A><br>
+<A HREF="compclauses2.html">Completed clauses</A><br>
+<UL>
+<LI>goal reachable: <span class="pred">b-inj-event</span>(<span class="fun">end1nomsg</span>(<span class="name">A</span>[],<span class="name">B</span>[]),<span class="var">@occ18_1</span>) <span class="conn">-&gt;</span> <span class="pred">inj-event</span>(<span class="fun">begin2</span>(<span class="name">A</span>[],<span class="name">B</span>[],<span class="var">m2_2</span>),<span class="var">@occ20_2</span>)<br>
+The hypothesis occurs strictly before the conclusion.<br>
+Abbreviations:
+<ul>
+
+<li><span class="var">m2_2</span> <span class="conn">=</span> <span class="name">m2_1</span>[cipher_1 = <span class="fun">enc</span>(<span class="fun"></span>(<span class="name">B</span>[],<span class="name">m1</span>[],<span class="name">n</span>[]),<span class="name">k</span>[])]
+<li><span class="var">@occ20_2</span> <span class="conn">=</span> <span class="name">@occ20_1</span>[cipher_1 = <span class="fun">enc</span>(<span class="fun"></span>(<span class="name">B</span>[],<span class="name">m1</span>[],<span class="name">n</span>[]),<span class="name">k</span>[])]
+<li><span class="var">@occ18_1</span> <span class="conn">=</span> <span class="name">@occ18</span>[cipher_1 = <span class="fun">enc</span>(<span class="fun"></span>(<span class="name">B</span>[],<span class="name">m1</span>[],<span class="name">n</span>[]),<span class="name">k</span>[])]
+</ul>
+</UL>
+<span class="result">RESULT inj-event(<span class="fun">begin2</span>(<span class="var">A_3</span>,<span class="var">B_3</span>,<span class="var">m</span>)) <span class="conn">==&gt;</span> inj-event(<span class="fun">end1nomsg</span>(<span class="var">A_3</span>,<span class="var">B_3</span>)) is <span class="trueresult">true</span>.</span><br>
+<LI><span class="query">Query inj-event(<span class="fun">end1</span>(<span class="var">A_3</span>,<span class="var">B_3</span>,<span class="var">m</span>)) <span class="conn">==&gt;</span> inj-event(<span class="fun">begin1</span>(<span class="var">A_3</span>,<span class="var">B_3</span>,<span class="var">m</span>)) in <A HREF="process_1.html" TARGET="process">process 1</A>.<br>
+</span>
+<A HREF="lemmas3.html" TARGET="lemmas">Lemmas</A><br>
+<A HREF="clauses3.html" TARGET="clauses">Clauses</A><br>
+<A HREF="compclauses3.html">Completed clauses</A><br>
+<UL>
+<LI>goal reachable: <span class="pred">b-inj-event</span>(<span class="fun">begin1</span>(<span class="name">A</span>[],<span class="name">B</span>[],<span class="name">m1</span>[]),<span class="name">@occ7</span>[]) <span class="conn">-&gt;</span> <span class="pred">inj-event</span>(<span class="fun">end1</span>(<span class="name">A</span>[],<span class="name">B</span>[],<span class="name">m1</span>[]),<span class="var">@occ17_1</span>)<br>
+The hypothesis occurs strictly before the conclusion.<br>
+Abbreviations:
+<ul>
+
+<li><span class="var">@occ17_1</span> <span class="conn">=</span> <span class="name">@occ17</span>[cipher_1 = <span class="fun">enc</span>(<span class="fun"></span>(<span class="name">B</span>[],<span class="name">m1</span>[],<span class="name">n</span>[]),<span class="name">k</span>[])]
+</ul>
+</UL>
+<span class="result">RESULT inj-event(<span class="fun">end1</span>(<span class="var">A_3</span>,<span class="var">B_3</span>,<span class="var">m</span>)) <span class="conn">==&gt;</span> inj-event(<span class="fun">begin1</span>(<span class="var">A_3</span>,<span class="var">B_3</span>,<span class="var">m</span>)) is <span class="trueresult">true</span>.</span><br>
+</UL> </UL>
+<br>
+<HR>
+<H2>Verification summary:</H2>
+<UL>
+<LI>Query inj-event(<span class="fun">end2</span>(<span class="var">A_3</span>,<span class="var">B_3</span>,<span class="var">m</span>)) <span class="conn">==&gt;</span> inj-event(<span class="fun">begin2</span>(<span class="var">A_3</span>,<span class="var">B_3</span>,<span class="var">m</span>)) is <span class="trueresult">true</span>.
+<LI>Query inj-event(<span class="fun">begin2</span>(<span class="var">A_3</span>,<span class="var">B_3</span>,<span class="var">m</span>)) <span class="conn">==&gt;</span> inj-event(<span class="fun">end1nomsg</span>(<span class="var">A_3</span>,<span class="var">B_3</span>)) is <span class="trueresult">true</span>.
+<LI>Query inj-event(<span class="fun">end1</span>(<span class="var">A_3</span>,<span class="var">B_3</span>,<span class="var">m</span>)) <span class="conn">==&gt;</span> inj-event(<span class="fun">begin1</span>(<span class="var">A_3</span>,<span class="var">B_3</span>,<span class="var">m</span>)) is <span class="trueresult">true</span>.
+</UL><HR>
+</body>
+</html>

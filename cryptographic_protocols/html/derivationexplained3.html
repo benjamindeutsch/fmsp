@@ -1,0 +1,96 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+                      <html>
+                    <head>
+                    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+                    <title>ProVerif: derivation for query 3</title>
+                    <link rel="stylesheet" href="cssproverif.css">
+                                                                           </head>
+                                                                         <body>
+                                                                         <H1>Explained derivation</H1>
+Abbreviations:
+<ul>
+
+<li><span class="var">b_1</span> <span class="conn">=</span> <span class="name">b</span>[vkS = <span class="fun">vk</span>(<span class="name">skS</span>[]),!2 = <span class="var">@sid</span>,!1 = <span class="var">@sid_1</span>]
+<li><span class="var">skC_2</span> <span class="conn">=</span> <span class="name">skC</span>[!1 = <span class="var">@sid_2</span>]
+<li><span class="var">skC_3</span> <span class="conn">=</span> <span class="name">skC</span>[!1 = <span class="var">@sid_3</span>]
+</ul>
+
+<ol>
+
+<li><a name=step1>The message <span class="fun">vk</span>(<span class="var">skC_3</span>) may be sent on channel <span class="name">priv</span>[] at output <a href="process_1.html#occ8" target="process" class="occ">{8}</a>.<br>
+<span class="pred">mess</span>(<span class="name">priv</span>[],<span class="fun">vk</span>(<span class="var">skC_3</span>)).<br>
+
+<li><a name=step2>The message <span class="fun">vk</span>(<span class="var">skC_3</span>) that may be sent on channel <span class="name">priv</span>[] by <a href="#step1">1</a> may be received at input <a href="process_1.html#occ31" target="process" class="occ">{31}</a>.<br>
+So the message <span class="fun">vk</span>(<span class="name">skS</span>[]) may be sent on channel <span class="name">priv</span>[] at output <a href="process_1.html#occ32" target="process" class="occ">{32}</a>.<br>
+<span class="pred">mess</span>(<span class="name">priv</span>[],<span class="fun">vk</span>(<span class="name">skS</span>[])).<br>
+
+<li><a name=step3>The attacker has some term <span class="var">ga_2</span>.<br>
+<span class="pred">attacker</span>(<span class="var">ga_2</span>).<br>
+
+<li><a name=step4>The message <span class="fun">vk</span>(<span class="name">skS</span>[]) that may be sent on channel <span class="name">priv</span>[] by <a href="#step2">2</a> may be received at input <a href="process_1.html#occ9" target="process" class="occ">{9}</a>.<br>
+The message <span class="var">ga_2</span> that the attacker may have by <a href="#step3">3</a> may be received at input <a href="process_1.html#occ12" target="process" class="occ">{12}</a>.<br>
+So the message <span class="fun">exp</span>(<span class="fun">g</span>,<span class="var">b_1</span>) may be sent to the attacker at output <a href="process_1.html#occ13" target="process" class="occ">{13}</a>.<br>
+<span class="pred">attacker</span>(<span class="fun">exp</span>(<span class="fun">g</span>,<span class="var">b_1</span>)).<br>
+
+<li><a name=step5>The message <span class="fun">vk</span>(<span class="var">skC_2</span>) may be sent on channel <span class="name">priv</span>[] at output <a href="process_1.html#occ8" target="process" class="occ">{8}</a>.<br>
+<span class="pred">mess</span>(<span class="name">priv</span>[],<span class="fun">vk</span>(<span class="var">skC_2</span>)).<br>
+
+<li><a name=step6>The message <span class="fun">vk</span>(<span class="var">skC_2</span>) that may be sent on channel <span class="name">priv</span>[] by <a href="#step5">5</a> may be received at input <a href="process_1.html#occ31" target="process" class="occ">{31}</a>.<br>
+So the message <span class="fun">vk</span>(<span class="name">skS</span>[]) may be sent on channel <span class="name">priv</span>[] at output <a href="process_1.html#occ32" target="process" class="occ">{32}</a>.<br>
+<span class="pred">mess</span>(<span class="name">priv</span>[],<span class="fun">vk</span>(<span class="name">skS</span>[])).<br>
+
+<li><a name=step7>Using the function <span class="fun">g</span> the attacker may obtain <span class="fun">g</span>.<br>
+<span class="pred">attacker</span>(<span class="fun">g</span>).<br>
+
+<li><a name=step8>The message <span class="name">skS</span>[] may be sent to the attacker at output <a href="process_1.html#occ53" target="process" class="occ">{53}</a>.<br>
+<span class="pred">attacker</span>(<span class="name">skS</span>[]).<br>
+
+<li><a name=step9>By <a href="#step7">7</a>, the attacker may know <span class="fun">g</span>.<br>
+By <a href="#step4">4</a>, the attacker may know <span class="fun">exp</span>(<span class="fun">g</span>,<span class="var">b_1</span>).<br>
+Using the function <span class="fun">sessionId</span> the attacker may obtain <span class="fun">sessionId</span>(<span class="fun">g</span>,<span class="fun">exp</span>(<span class="fun">g</span>,<span class="var">b_1</span>)).<br>
+<span class="pred">attacker</span>(<span class="fun">sessionId</span>(<span class="fun">g</span>,<span class="fun">exp</span>(<span class="fun">g</span>,<span class="var">b_1</span>))).<br>
+
+<li><a name=step10>By <a href="#step9">9</a>, the attacker may know <span class="fun">sessionId</span>(<span class="fun">g</span>,<span class="fun">exp</span>(<span class="fun">g</span>,<span class="var">b_1</span>)).<br>
+By <a href="#step8">8</a>, the attacker may know <span class="name">skS</span>[].<br>
+Using the function <span class="fun">sign</span> the attacker may obtain <span class="fun">sign</span>(<span class="fun">sessionId</span>(<span class="fun">g</span>,<span class="fun">exp</span>(<span class="fun">g</span>,<span class="var">b_1</span>)),<span class="name">skS</span>[]).<br>
+<span class="pred">attacker</span>(<span class="fun">sign</span>(<span class="fun">sessionId</span>(<span class="fun">g</span>,<span class="fun">exp</span>(<span class="fun">g</span>,<span class="var">b_1</span>)),<span class="name">skS</span>[])).<br>
+
+<li><a name=step11>The message <span class="fun">vk</span>(<span class="name">skS</span>[]) may be sent to the attacker at output <a href="process_1.html#occ27" target="process" class="occ">{27}</a>.<br>
+<span class="pred">attacker</span>(<span class="fun">vk</span>(<span class="name">skS</span>[])).<br>
+
+<li><a name=step12>By <a href="#step11">11</a>, the attacker may know <span class="fun">vk</span>(<span class="name">skS</span>[]).<br>
+By <a href="#step10">10</a>, the attacker may know <span class="fun">sign</span>(<span class="fun">sessionId</span>(<span class="fun">g</span>,<span class="fun">exp</span>(<span class="fun">g</span>,<span class="var">b_1</span>)),<span class="name">skS</span>[]).<br>
+Using the function <span class="fun">2-tuple</span> the attacker may obtain <span class="fun"></span>(<span class="fun">vk</span>(<span class="name">skS</span>[]),<span class="fun">sign</span>(<span class="fun">sessionId</span>(<span class="fun">g</span>,<span class="fun">exp</span>(<span class="fun">g</span>,<span class="var">b_1</span>)),<span class="name">skS</span>[])).<br>
+<span class="pred">attacker</span>(<span class="fun"></span>(<span class="fun">vk</span>(<span class="name">skS</span>[]),<span class="fun">sign</span>(<span class="fun">sessionId</span>(<span class="fun">g</span>,<span class="fun">exp</span>(<span class="fun">g</span>,<span class="var">b_1</span>)),<span class="name">skS</span>[]))).<br>
+
+<li><a name=step13>We assume as hypothesis that<br>
+<span class="pred">attacker</span>(<span class="fun">encrypt</span>(<span class="var">n_2</span>,<span class="fun">exp</span>(<span class="fun">g</span>,<span class="var">b_1</span>))).<br>
+
+<li><a name=step14>The attacker initially knows <span class="name">accept</span>[].<br>
+<span class="pred">attacker</span>(<span class="name">accept</span>[]).<br>
+
+<li><a name=step15>By <a href="#step14">14</a>, the attacker may know <span class="name">accept</span>[].<br>
+By <a href="#step4">4</a>, the attacker may know <span class="fun">exp</span>(<span class="fun">g</span>,<span class="var">b_1</span>).<br>
+Using the function <span class="fun">encrypt</span> the attacker may obtain <span class="fun">encrypt</span>(<span class="name">accept</span>[],<span class="fun">exp</span>(<span class="fun">g</span>,<span class="var">b_1</span>)).<br>
+<span class="pred">attacker</span>(<span class="fun">encrypt</span>(<span class="name">accept</span>[],<span class="fun">exp</span>(<span class="fun">g</span>,<span class="var">b_1</span>))).<br>
+
+<li><a name=step16>The message <span class="fun">vk</span>(<span class="name">skS</span>[]) that may be sent on channel <span class="name">priv</span>[] by <a href="#step6">6</a> may be received at input <a href="process_1.html#occ9" target="process" class="occ">{9}</a>.<br>
+The message <span class="fun">g</span> that the attacker may have by <a href="#step7">7</a> may be received at input <a href="process_1.html#occ12" target="process" class="occ">{12}</a>.<br>
+The message <span class="fun"></span>(<span class="fun">vk</span>(<span class="name">skS</span>[]),<span class="fun">sign</span>(<span class="fun">sessionId</span>(<span class="fun">g</span>,<span class="fun">exp</span>(<span class="fun">g</span>,<span class="var">b_1</span>)),<span class="name">skS</span>[])) that the attacker may have by <a href="#step12">12</a> may be received at input <a href="process_1.html#occ16" target="process" class="occ">{16}</a>.<br>
+The message <span class="fun">encrypt</span>(<span class="var">n_2</span>,<span class="fun">exp</span>(<span class="fun">g</span>,<span class="var">b_1</span>)) that the attacker may have by <a href="#step13">13</a> may be received at input <a href="process_1.html#occ20" target="process" class="occ">{20}</a>.<br>
+The message <span class="fun">encrypt</span>(<span class="name">accept</span>[],<span class="fun">exp</span>(<span class="fun">g</span>,<span class="var">b_1</span>)) that the attacker may have by <a href="#step15">15</a> may be received at input <a href="process_1.html#occ23" target="process" class="occ">{23}</a>.<br>
+So the message <span class="fun">encrypt</span>(<span class="name">message</span>[],<span class="fun">exp</span>(<span class="fun">g</span>,<span class="var">b_1</span>)) may be sent to the attacker at output <a href="process_1.html#occ25" target="process" class="occ">{25}</a>.<br>
+<span class="pred">attacker</span>(<span class="fun">encrypt</span>(<span class="name">message</span>[],<span class="fun">exp</span>(<span class="fun">g</span>,<span class="var">b_1</span>))).<br>
+
+<li><a name=step17>By <a href="#step16">16</a>, the attacker may know <span class="fun">encrypt</span>(<span class="name">message</span>[],<span class="fun">exp</span>(<span class="fun">g</span>,<span class="var">b_1</span>)).<br>
+By <a href="#step4">4</a>, the attacker may know <span class="fun">exp</span>(<span class="fun">g</span>,<span class="var">b_1</span>).<br>
+Using the function <span class="fun">decrypt</span> the attacker may obtain <span class="name">message</span>[].<br>
+<span class="pred">attacker</span>(<span class="name">message</span>[]).<br>
+
+<li><a name=step18>By <a href="#step17">17</a>, <span class="pred">attacker</span>(<span class="name">message</span>[]).<br>
+The goal is reached, represented in the following fact:<br>
+<span class="pred">attacker</span>(<span class="name">message</span>[]).<br>
+
+</ol>
+</body>
+</html>

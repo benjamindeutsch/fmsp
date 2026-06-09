@@ -1,0 +1,11 @@
+hin = 1;
+l = h;
+IF l < 0 THEN
+  l = -1 * l
+ELSE
+  hin = 0
+END;
+WHILE 0 < l DO
+  l = l - 1
+END;
+h = 0

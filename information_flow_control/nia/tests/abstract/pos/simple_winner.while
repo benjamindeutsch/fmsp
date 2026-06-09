@@ -1,0 +1,11 @@
+lwinner = -1;
+
+IF hbidA < hbidB THEN
+  lwinner = 1
+ELSE
+  IF hbidB < hbidA THEN
+    lwinner = 0
+  ELSE
+    lwinner = 2
+  END
+END

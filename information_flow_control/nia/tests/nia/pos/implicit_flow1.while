@@ -1,0 +1,5 @@
+IF h THEN
+    l = 1
+ELSE
+    l = 0
+END

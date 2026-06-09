@@ -1,0 +1,17 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+                      <html>
+                    <head>
+                    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+                    <title>ProVerif: unifying derivation for query 6</title>
+                    <link rel="stylesheet" href="cssproverif.css">
+                                                                           </head>
+                                                                         <body>
+                                                                         <H1>Unifying the derivation</H1>
+Unified <span class="var">ga_2</span> with <span class="fun">exp</span>(<span class="fun">g</span>,<span class="var">a_1</span>)<br>
+Unified <span class="var">n_2</span> with <span class="name">message</span>[]<br>
+Unified <span class="var">k</span> with <span class="var">k_1</span><br>
+The clause after UnifyDerivationPrecise is<br>
+<span class="pred">attacker</span>(<span class="var">a_1</span>) <span class="conn">&amp;&amp;</span> <span class="pred">attacker</span>(<span class="fun">encrypt</span>(<span class="name">message</span>[],<span class="fun">exp</span>(<span class="fun">exp</span>(<span class="fun">g</span>,<span class="name">b</span>[!2 = <span class="var">@sid</span>,!1 = <span class="var">@sid_1</span>]),<span class="var">a_1</span>))) <span class="conn">-&gt;</span> <span class="pred">attacker</span>(<span class="name">message</span>[])<br>
+This clause still contradicts the query.<br>
+</body>
+</html>

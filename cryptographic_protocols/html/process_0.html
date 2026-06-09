@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+                      <html>
+                    <head>
+                    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+                    <title>ProVerif: process 0</title>
+                    <link rel="stylesheet" href="cssproverif.css">
+                                                                           </head>
+                                                                         <body>
+                                                                         <H1>Process 0 (the initial process)</H1>
+<a name=occ1 class="occ">{1}</a> <span class="keyword">new</span> <span class="name">skS</span>: <span class="type">sign_key</span>;<br>
+(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name=occ2 class="occ">{2}</a> <span class="keyword">!</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name=occ3 class="occ">{3}</a> <span class="keyword">new</span> <span class="name">skC</span>: <span class="type">sign_key</span>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name=occ4 class="occ">{4}</a> <span class="keyword">out</span>(<span class="name">att</span>, <span class="fun">vk</span>(<span class="name">skC</span>));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name=occ5 class="occ">{5}</a> <span class="keyword">!</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name=occ6 class="occ">{6}</a> <span class="keyword">let</span> <span class="var">skC_1</span>: <span class="type">sign_key</span> = <span class="name">skC</span> <span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name=occ7 class="occ">{7}</a> <span class="keyword">event</span> <span class="fun">clientBegin</span>(<span class="var">skC_1</span>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name=occ8 class="occ">{8}</a> <span class="keyword">out</span>(<span class="name">priv</span>, <span class="fun">vk</span>(<span class="var">skC_1</span>));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name=occ9 class="occ">{9}</a> <span class="keyword">in</span>(<span class="name">priv</span>, <span class="var">vkS</span>: <span class="type">ver_key</span>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name=occ10 class="occ">{10}</a> <span class="keyword">new</span> <span class="name">b</span>: <span class="type">Z</span>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name=occ11 class="occ">{11}</a> <span class="keyword">let</span> <span class="var">gb</span>: <span class="type">G</span> = <span class="fun">exp</span>(<span class="fun">g</span>,<span class="name">b</span>) <span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name=occ12 class="occ">{12}</a> <span class="keyword">in</span>(<span class="name">net</span>, <span class="var">ga</span>: <span class="type">G</span>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name=occ13 class="occ">{13}</a> <span class="keyword">out</span>(<span class="name">net</span>, <span class="var">gb</span>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name=occ14 class="occ">{14}</a> <span class="keyword">let</span> <span class="var">gab</span>: <span class="type">G</span> = <span class="fun">exp</span>(<span class="var">ga</span>,<span class="name">b</span>) <span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name=occ15 class="occ">{15}</a> <span class="keyword">let</span> <span class="var">sid_1</span>: <span class="type">bitstring</span> = <span class="fun">sessionId</span>(<span class="var">ga</span>,<span class="var">gb</span>) <span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name=occ16 class="occ">{16}</a> <span class="keyword">in</span>(<span class="name">net</span>, <span class="fun"></span>(=<span class="var">vkS</span>,<span class="var">m_sid</span>: <span class="type">bitstring</span>));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name=occ17 class="occ">{17}</a> <span class="keyword">let</span> =<span class="var">sid_1</span> = <span class="fun">verify</span>(<span class="var">m_sid</span>,<span class="var">vkS</span>) <span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name=occ18 class="occ">{18}</a> <span class="keyword">event</span> <span class="fun">clientKeyExchanged</span>(<span class="var">skC_1</span>,<span class="var">vkS</span>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name=occ19 class="occ">{19}</a> <span class="keyword">out</span>(<span class="name">net</span>, <span class="fun">encrypt</span>(<span class="fun">vk</span>(<span class="var">skC_1</span>),<span class="var">gab</span>));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name=occ20 class="occ">{20}</a> <span class="keyword">in</span>(<span class="name">net</span>, <span class="var">m_n</span>: <span class="type">bitstring</span>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name=occ21 class="occ">{21}</a> <span class="keyword">let</span> <span class="var">n</span>: <span class="type">bitstring</span> = <span class="fun">decrypt</span>(<span class="var">m_n</span>,<span class="var">gab</span>) <span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name=occ22 class="occ">{22}</a> <span class="keyword">out</span>(<span class="name">net</span>, <span class="fun">encrypt</span>(<span class="fun">sign</span>(<span class="fun"></span>(<span class="var">sid_1</span>,<span class="var">n</span>),<span class="var">skC_1</span>),<span class="var">gab</span>));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name=occ23 class="occ">{23}</a> <span class="keyword">in</span>(<span class="name">net</span>, <span class="var">r</span>: <span class="type">bitstring</span>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name=occ24 class="occ">{24}</a> <span class="keyword">let</span> =<span class="fun">accept</span> = <span class="fun">decrypt</span>(<span class="var">r</span>,<span class="var">gab</span>) <span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name=occ25 class="occ">{25}</a> <span class="keyword">out</span>(<span class="name">net</span>, <span class="fun">encrypt</span>(<span class="name">message</span>,<span class="var">gab</span>));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name=occ26 class="occ">{26}</a> <span class="keyword">event</span> <span class="fun">clientEnd</span>(<span class="var">skC_1</span>,<span class="var">vkS</span>)<br>
+) | (<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name=occ27 class="occ">{27}</a> <span class="keyword">!</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name=occ28 class="occ">{28}</a> <span class="keyword">out</span>(<span class="name">att</span>, <span class="fun">vk</span>(<span class="name">skS</span>));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name=occ29 class="occ">{29}</a> <span class="keyword">!</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name=occ30 class="occ">{30}</a> <span class="keyword">let</span> <span class="var">skS_1</span>: <span class="type">sign_key</span> = <span class="name">skS</span> <span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name=occ31 class="occ">{31}</a> <span class="keyword">event</span> <span class="fun">serverBegin</span>(<span class="var">skS_1</span>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name=occ32 class="occ">{32}</a> <span class="keyword">in</span>(<span class="name">priv</span>, <span class="var">vkC</span>: <span class="type">ver_key</span>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name=occ33 class="occ">{33}</a> <span class="keyword">out</span>(<span class="name">priv</span>, <span class="fun">vk</span>(<span class="var">skS_1</span>));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name=occ34 class="occ">{34}</a> <span class="keyword">new</span> <span class="name">a</span>: <span class="type">Z</span>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name=occ35 class="occ">{35}</a> <span class="keyword">let</span> <span class="var">ga_1</span>: <span class="type">G</span> = <span class="fun">exp</span>(<span class="fun">g</span>,<span class="name">a</span>) <span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name=occ36 class="occ">{36}</a> <span class="keyword">out</span>(<span class="name">net</span>, <span class="var">ga_1</span>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name=occ37 class="occ">{37}</a> <span class="keyword">in</span>(<span class="name">net</span>, <span class="var">gb_1</span>: <span class="type">G</span>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name=occ38 class="occ">{38}</a> <span class="keyword">let</span> <span class="var">gab_1</span>: <span class="type">G</span> = <span class="fun">exp</span>(<span class="var">gb_1</span>,<span class="name">a</span>) <span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name=occ39 class="occ">{39}</a> <span class="keyword">let</span> <span class="var">sid_2</span>: <span class="type">bitstring</span> = <span class="fun">sessionId</span>(<span class="var">ga_1</span>,<span class="var">gb_1</span>) <span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name=occ40 class="occ">{40}</a> <span class="keyword">out</span>(<span class="name">net</span>, <span class="fun"></span>(<span class="fun">vk</span>(<span class="var">skS_1</span>),<span class="fun">sign</span>(<span class="var">sid_2</span>,<span class="var">skS_1</span>)));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name=occ41 class="occ">{41}</a> <span class="keyword">in</span>(<span class="name">net</span>, <span class="var">m1</span>: <span class="type">bitstring</span>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name=occ42 class="occ">{42}</a> <span class="keyword">let</span> =<span class="var">vkC</span> = <span class="fun">decrypt</span>(<span class="var">m1</span>,<span class="var">gab_1</span>) <span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name=occ43 class="occ">{43}</a> <span class="keyword">new</span> <span class="name">n_1</span>: <span class="type">bitstring</span>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name=occ44 class="occ">{44}</a> <span class="keyword">out</span>(<span class="name">net</span>, <span class="fun">encrypt</span>(<span class="name">n_1</span>,<span class="var">gab_1</span>));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name=occ45 class="occ">{45}</a> <span class="keyword">in</span>(<span class="name">net</span>, <span class="var">m2</span>: <span class="type">bitstring</span>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name=occ46 class="occ">{46}</a> <span class="keyword">let</span> <span class="var">m2_dec</span>: <span class="type">bitstring</span> = <span class="fun">decrypt</span>(<span class="var">m2</span>,<span class="var">gab_1</span>) <span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name=occ47 class="occ">{47}</a> <span class="keyword">let</span> <span class="fun"></span>(=<span class="var">sid_2</span>,=<span class="name">n_1</span>) = <span class="fun">verify</span>(<span class="var">m2_dec</span>,<span class="var">vkC</span>) <span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name=occ48 class="occ">{48}</a> <span class="keyword">event</span> <span class="fun">serverAccept</span>(<span class="var">skS_1</span>,<span class="var">vkC</span>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name=occ49 class="occ">{49}</a> <span class="keyword">out</span>(<span class="name">net</span>, <span class="fun">encrypt</span>(<span class="fun">accept</span>,<span class="var">gab_1</span>));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name=occ50 class="occ">{50}</a> <span class="keyword">in</span>(<span class="name">net</span>, <span class="var">m_message</span>: <span class="type">bitstring</span>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name=occ51 class="occ">{51}</a> <span class="keyword">let</span> =<span class="name">message</span> = <span class="fun">decrypt</span>(<span class="var">m_message</span>,<span class="var">gab_1</span>) <span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a name=occ52 class="occ">{52}</a> <span class="keyword">event</span> <span class="fun">serverEnd</span>(<span class="var">skS_1</span>,<span class="var">vkC</span>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">else</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a name=occ53 class="occ">{53}</a> <span class="keyword">out</span>(<span class="name">net</span>, <span class="fun">encrypt</span>(<span class="fun">reject</span>,<span class="var">gab_1</span>))<br>
+) | (<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name=occ54 class="occ">{54}</a> <span class="keyword">phase</span> 1;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name=occ55 class="occ">{55}</a> <span class="keyword">out</span>(<span class="name">att</span>, <span class="name">skS</span>)<br>
+)<br>
+<br>
+</body>
+</html>

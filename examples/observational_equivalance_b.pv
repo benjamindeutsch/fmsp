@@ -1,0 +1,18 @@
+free c:channel.
+
+type ekey.
+type dkey.
+
+fun enc(bitstring, ekey, bitstring):bitstring.
+fun ek(dkey):ekey.
+fun dec(bitstring, dkey):bitstring
+	reduc forall m:bitstring, r:bitstring, k:dkey; dec(enc(m,ek(k),r),k) = m.
+
+let A(ekB:ekey) =
+	in(c, x:bitstring);
+	new n:bitstring;
+	new r1:bitstring;
+	out(c, choice[enc(x,ekB,r1),n]). (* <- here is where the query if from *)
+
+process
+	new kB:dkey; out(c, ek(kB)); ! A(ek(kB))

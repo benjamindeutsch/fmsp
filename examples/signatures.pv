@@ -1,0 +1,69 @@
+(* channel *)
+free c:channel.
+free att:channel. (* <- useless. To emphasize leaking information to the attacker *)
+
+(* types *)
+type id.
+type rand.
+type sign_key.
+type ver_key.
+
+(* identifiers *)
+free A,B:id.
+
+(* declaring the events *)
+event end(id, id, bitstring).
+event begin(id, id, bitstring).
+
+
+(* signature *)
+fun sign(bitstring, sign_key):bitstring.
+fun vk(sign_key):ver_key.
+reduc forall m:bitstring, k:sign_key;
+  verify(sign(m, k), vk(k)) = m. (* this only simplifies if the signature is authentic *)
+
+reduc forall m:bitstring, k:sign_key;
+  getmsg(sign(m, k)) = m. (* <- not required here, but this is need for MACs as it given
+                                access to the message signed to the attacker without
+                                requiring access to the key *)
+
+
+(*========================================================*)
+(*======================== queries =======================*)
+(*========================================================*)
+
+query id1:id, id2:id, m1:bitstring; event(end(id1,id2,m1)). (* reachablility *)
+query id1:id, id2:id, m1:bitstring; (* non-injective agreement *)
+  event(end(id1,id2,m1)) ==> event(begin(id1,id2,m1)).
+query id1:id, id2:id, m1:bitstring; (* injective agreement *)
+  event(end(id1,id2,m1)) ==> inj-event(begin(id1,id2,m1)).
+
+(*========================================================*)
+(*============== description of the protocol =============*)
+(*========================================================*)
+
+(* Alice *)
+let alice(idA:id, idB:id, skA:sign_key)=
+  in (c, n:rand);
+  new m:bitstring;
+  event begin(idA,idB,m);
+  out(c, sign((idA,m,n),skA));
+  0.
+
+
+(* Bob *)
+let bob(idA:id, idB:id, vkA:ver_key)=
+  new n:id;
+  out (c,n);
+  in (c, mA:bitstring);
+  let (=idA, m:bitstring, =n) = verify(mA, vkA) in
+  event end(idA,idB,m).
+
+
+process
+  new skA:sign_key;
+  new skB:sign_key;
+  out(att, (vk(skA), vk(skB))); (* verification keys are public *)
+  !(alice(A, B, skA) | bob(A, B, vk(skA)))
+                              (* ^^^^^^^^ we predistribute the verification key *)
+  | !(alice(B, A, skB) | bob(B, A, vk(skB)))

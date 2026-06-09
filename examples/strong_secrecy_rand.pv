@@ -1,0 +1,26 @@
+(* types *)
+type rand.
+type ekey.
+type dkey.
+
+
+(* public key encryption with randomization *)
+fun ek(dkey):ekey.
+fun enc(bitstring, rand, ekey):bitstring.
+                (* ^^^^^ removing the randomness breaks strong secrecy *)
+fun dec(bitstring, dkey):bitstring
+  reduc forall x:bitstring, r:rand, y:dkey; dec(enc(x,r,ek(y)),y) = x.
+
+(* channel *)
+free c:channel.
+
+(* secret *)
+free x:bitstring [private].
+
+query attacker(x). (* <- secrecy *)
+noninterf x. (* <- strong secrecy *) (* true *)
+weaksecret x. (* <- weak secrecy *) (* true *)
+
+process
+  new r:rand; new k:dkey;
+  out(c,ek(k)); out(c,enc(x,r,ek(k)))

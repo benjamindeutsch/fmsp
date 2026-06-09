@@ -1,0 +1,9 @@
+IF h > 0 THEN
+    l = h
+ELSE
+    l = h * -1
+END;
+WHILE 0 < l DO
+    l = l - 1
+END;
+l = l

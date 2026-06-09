@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+                      <html>
+                    <head>
+                    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+                    <title>ProVerif: trace for query 3</title>
+                    <link rel="stylesheet" href="cssproverif.css">
+                                                                           </head>
+                                                                         <body>
+                                                                         <H1>Trace</H1>
+<span class="keyword">new</span> <span class="name">skS</span>: <span class="type">sign_key</span> creating <span class="name">skS_2</span> at <a href="process_1.html#occ1" target="process" class="occ">{1}</a><br>
+<br>
+<span class="keyword">out</span>(<span class="name">att</span>, <span class="var">~M</span>) with <span class="var">~M</span> = <span class="name">skS_2</span> at <a href="process_1.html#occ53" target="process" class="occ">{53}</a><br>
+<br>
+<span class="keyword">out</span>(<span class="name">att</span>, <span class="var">~M_1</span>) with <span class="var">~M_1</span> = <span class="fun">vk</span>(<span class="name">skS_2</span>) at <a href="process_1.html#occ27" target="process" class="occ">{27}</a><br>
+<br>
+<span class="keyword">event</span> <span class="fun">serverBegin</span>(<span class="name">skS_2</span>) at <a href="process_1.html#occ30" target="process" class="occ">{30}</a> in copy <span class="name">a_1</span><br>
+<br>
+<span class="keyword">event</span> <span class="fun">serverBegin</span>(<span class="name">skS_2</span>) at <a href="process_1.html#occ30" target="process" class="occ">{30}</a> in copy <span class="name">a_2</span><br>
+<br>
+<span class="keyword">new</span> <span class="name">skC</span>: <span class="type">sign_key</span> creating <span class="name">skC_4</span> at <a href="process_1.html#occ3" target="process" class="occ">{3}</a> in copy <span class="name">a_3</span><br>
+<br>
+<span class="keyword">out</span>(<span class="name">att</span>, <span class="var">~M_2</span>) with <span class="var">~M_2</span> = <span class="fun">vk</span>(<span class="name">skC_4</span>) at <a href="process_1.html#occ4" target="process" class="occ">{4}</a> in copy <span class="name">a_3</span><br>
+<br>
+<span class="keyword">event</span> <span class="fun">clientBegin</span>(<span class="name">skC_4</span>) at <a href="process_1.html#occ7" target="process" class="occ">{7}</a> in copy <span class="name">a_3</span>, <span class="name">a_4</span><br>
+<br>
+<span class="keyword">new</span> <span class="name">skC</span>: <span class="type">sign_key</span> creating <span class="name">skC_5</span> at <a href="process_1.html#occ3" target="process" class="occ">{3}</a> in copy <span class="name">a_5</span><br>
+<br>
+<span class="keyword">out</span>(<span class="name">att</span>, <span class="var">~M_3</span>) with <span class="var">~M_3</span> = <span class="fun">vk</span>(<span class="name">skC_5</span>) at <a href="process_1.html#occ4" target="process" class="occ">{4}</a> in copy <span class="name">a_5</span><br>
+<br>
+<span class="keyword">event</span> <span class="fun">clientBegin</span>(<span class="name">skC_5</span>) at <a href="process_1.html#occ7" target="process" class="occ">{7}</a> in copy <span class="name">a_5</span>, <span class="name">a_6</span><br>
+<br>
+<span class="keyword">new</span> <span class="name">skC</span>: <span class="type">sign_key</span> creating <span class="name">skC_6</span> at <a href="process_1.html#occ3" target="process" class="occ">{3}</a> in copy <span class="name">a_7</span><br>
+<br>
+<span class="keyword">out</span>(<span class="name">att</span>, <span class="var">~M_4</span>) with <span class="var">~M_4</span> = <span class="fun">vk</span>(<span class="name">skC_6</span>) at <a href="process_1.html#occ4" target="process" class="occ">{4}</a> in copy <span class="name">a_7</span><br>
+<br>
+<span class="keyword">event</span> <span class="fun">clientBegin</span>(<span class="name">skC_6</span>) at <a href="process_1.html#occ7" target="process" class="occ">{7}</a> in copy <span class="name">a_7</span>, <span class="name">a_8</span><br>
+<br>
+<span class="keyword">out</span>(<span class="name">priv</span>, <span class="fun">vk</span>(<span class="name">skC_6</span>)) at <a href="process_1.html#occ8" target="process" class="occ">{8}</a> in copy <span class="name">a_7</span>, <span class="name">a_8</span> received at <a href="process_1.html#occ31" target="process" class="occ">{31}</a> in copy <span class="name">a_2</span><br>
+<br>
+<span class="keyword">out</span>(<span class="name">priv</span>, <span class="fun">vk</span>(<span class="name">skC_5</span>)) at <a href="process_1.html#occ8" target="process" class="occ">{8}</a> in copy <span class="name">a_5</span>, <span class="name">a_6</span> received at <a href="process_1.html#occ9" target="process" class="occ">{9}</a> in copy <span class="name">a_7</span>, <span class="name">a_8</span><br>
+<br>
+<span class="keyword">new</span> <span class="name">b</span>: <span class="type">Z</span> creating <span class="name">b_2</span> at <a href="process_1.html#occ10" target="process" class="occ">{10}</a> in copy <span class="name">a_7</span>, <span class="name">a_8</span><br>
+<br>
+<span class="keyword">out</span>(<span class="name">priv</span>, <span class="fun">vk</span>(<span class="name">skC_4</span>)) at <a href="process_1.html#occ8" target="process" class="occ">{8}</a> in copy <span class="name">a_3</span>, <span class="name">a_4</span> received at <a href="process_1.html#occ9" target="process" class="occ">{9}</a> in copy <span class="name">a_5</span>, <span class="name">a_6</span><br>
+<br>
+<span class="keyword">new</span> <span class="name">b</span>: <span class="type">Z</span> creating <span class="name">b_3</span> at <a href="process_1.html#occ10" target="process" class="occ">{10}</a> in copy <span class="name">a_5</span>, <span class="name">a_6</span><br>
+<br>
+<span class="keyword">out</span>(<span class="name">priv</span>, <span class="fun">vk</span>(<span class="name">skS_2</span>)) at <a href="process_1.html#occ32" target="process" class="occ">{32}</a> in copy <span class="name">a_2</span> received at <a href="process_1.html#occ9" target="process" class="occ">{9}</a> in copy <span class="name">a_3</span>, <span class="name">a_4</span><br>
+<br>
+<span class="keyword">new</span> <span class="name">a</span>: <span class="type">Z</span> creating <span class="name">a_9</span> at <a href="process_1.html#occ33" target="process" class="occ">{33}</a> in copy <span class="name">a_2</span><br>
+<br>
+<span class="keyword">out</span>(<span class="name">net</span>, <span class="var">~M_5</span>) with <span class="var">~M_5</span> = <span class="fun">exp</span>(<span class="fun">g</span>,<span class="name">a_9</span>) at <a href="process_1.html#occ35" target="process" class="occ">{35}</a> in copy <span class="name">a_2</span><br>
+<br>
+<span class="keyword">new</span> <span class="name">b</span>: <span class="type">Z</span> creating <span class="name">b_4</span> at <a href="process_1.html#occ10" target="process" class="occ">{10}</a> in copy <span class="name">a_3</span>, <span class="name">a_4</span><br>
+<br>
+<span class="keyword">in</span>(<span class="name">net</span>, <span class="fun">g</span>) at <a href="process_1.html#occ12" target="process" class="occ">{12}</a> in copy <span class="name">a_3</span>, <span class="name">a_4</span><br>
+<br>
+<span class="keyword">out</span>(<span class="name">net</span>, <span class="var">~M_6</span>) with <span class="var">~M_6</span> = <span class="fun">exp</span>(<span class="fun">g</span>,<span class="name">b_4</span>) at <a href="process_1.html#occ13" target="process" class="occ">{13}</a> in copy <span class="name">a_3</span>, <span class="name">a_4</span><br>
+<br>
+<span class="keyword">in</span>(<span class="name">net</span>, <span class="fun"></span>(<span class="var">~M_1</span>,<span class="fun">sign</span>(<span class="fun">sessionId</span>(<span class="fun">g</span>,<span class="var">~M_6</span>),<span class="var">~M</span>))) with <span class="var">~M_1</span> = <span class="fun">vk</span>(<span class="name">skS_2</span>), <span class="fun">sign</span>(<span class="fun">sessionId</span>(<span class="fun">g</span>,<span class="var">~M_6</span>),<span class="var">~M</span>) = <span class="fun">sign</span>(<span class="fun">sessionId</span>(<span class="fun">g</span>,<span class="fun">exp</span>(<span class="fun">g</span>,<span class="name">b_4</span>)),<span class="name">skS_2</span>) at <a href="process_1.html#occ16" target="process" class="occ">{16}</a> in copy <span class="name">a_3</span>, <span class="name">a_4</span><br>
+<br>
+<span class="keyword">event</span> <span class="fun">clientKeyExchanged</span>(<span class="name">skC_4</span>,<span class="fun">vk</span>(<span class="name">skS_2</span>)) at <a href="process_1.html#occ18" target="process" class="occ">{18}</a> in copy <span class="name">a_3</span>, <span class="name">a_4</span><br>
+<br>
+<span class="keyword">out</span>(<span class="name">net</span>, <span class="var">~M_7</span>) with <span class="var">~M_7</span> = <span class="fun">encrypt</span>(<span class="fun">vk</span>(<span class="name">skC_4</span>),<span class="fun">exp</span>(<span class="fun">g</span>,<span class="name">b_4</span>)) at <a href="process_1.html#occ19" target="process" class="occ">{19}</a> in copy <span class="name">a_3</span>, <span class="name">a_4</span><br>
+<br>
+<span class="keyword">in</span>(<span class="name">net</span>, <span class="var">~M_8</span>) with <span class="var">~M_8</span> = <span class="fun">encrypt</span>(<span class="name">a_10</span>,<span class="fun">exp</span>(<span class="fun">g</span>,<span class="name">b_4</span>)) at <a href="process_1.html#occ20" target="process" class="occ">{20}</a> in copy <span class="name">a_3</span>, <span class="name">a_4</span><br>
+<br>
+<span class="keyword">out</span>(<span class="name">net</span>, <span class="var">~M_9</span>) with <span class="var">~M_9</span> = <span class="fun">encrypt</span>(<span class="fun">sign</span>(<span class="fun"></span>(<span class="fun">sessionId</span>(<span class="fun">g</span>,<span class="fun">exp</span>(<span class="fun">g</span>,<span class="name">b_4</span>)),<span class="name">a_10</span>),<span class="name">skC_4</span>),<span class="fun">exp</span>(<span class="fun">g</span>,<span class="name">b_4</span>)) at <a href="process_1.html#occ22" target="process" class="occ">{22}</a> in copy <span class="name">a_3</span>, <span class="name">a_4</span><br>
+<br>
+<span class="keyword">in</span>(<span class="name">net</span>, <span class="fun">encrypt</span>(<span class="name">accept</span>,<span class="var">~M_6</span>)) with <span class="fun">encrypt</span>(<span class="name">accept</span>,<span class="var">~M_6</span>) = <span class="fun">encrypt</span>(<span class="name">accept</span>,<span class="fun">exp</span>(<span class="fun">g</span>,<span class="name">b_4</span>)) at <a href="process_1.html#occ23" target="process" class="occ">{23}</a> in copy <span class="name">a_3</span>, <span class="name">a_4</span><br>
+<br>
+<span class="keyword">out</span>(<span class="name">net</span>, <span class="var">~M_10</span>) with <span class="var">~M_10</span> = <span class="fun">encrypt</span>(<span class="name">message</span>,<span class="fun">exp</span>(<span class="fun">g</span>,<span class="name">b_4</span>)) at <a href="process_1.html#occ25" target="process" class="occ">{25}</a> in copy <span class="name">a_3</span>, <span class="name">a_4</span><br>
+<br>
+<span class="keyword">event</span> <span class="fun">clientEnd</span>(<span class="name">skC_4</span>,<span class="fun">vk</span>(<span class="name">skS_2</span>)) at <a href="process_1.html#occ26" target="process" class="occ">{26}</a> in copy <span class="name">a_3</span>, <span class="name">a_4</span><br>
+<br>
+The attacker has the message <span class="fun">decrypt</span>(<span class="var">~M_10</span>,<span class="var">~M_6</span>) = <span class="name">message</span>.<br>
+A trace has been found, assuming the following hypothesis:
+<ul>
+
+<li>The attacker has <span class="var">~M_8</span> = <span class="fun">encrypt</span>(<span class="name">a_10</span>[],<span class="fun">exp</span>(<span class="fun">g</span>,<span class="name">b_4</span>[]))
+</ul>
+</body>
+</html>

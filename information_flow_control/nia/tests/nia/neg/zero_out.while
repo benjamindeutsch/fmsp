@@ -1,0 +1,4 @@
+IF h != 0 THEN
+    h = 0
+END;
+l = h

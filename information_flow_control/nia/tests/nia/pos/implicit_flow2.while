@@ -1,0 +1,3 @@
+IF h THEN
+    l = 1
+END

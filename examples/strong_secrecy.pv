@@ -1,0 +1,24 @@
+(* types *)
+type dkey.
+type ekey.
+
+(* public key encryption *)
+
+fun ek(dkey):ekey.
+fun enc(bitstring, ekey):bitstring.
+fun dec(bitstring, dkey):bitstring
+  reduc forall x:bitstring, y:dkey; dec(enc(x,ek(y)),y) = x.
+
+(* channel *)
+free c:channel.
+
+(* secret *)
+free x:bitstring [private].
+
+query attacker(x). (* <- secrecy *)
+noninterf x.(* <- strong secrecy *) (* cannot be proved *)
+weaksecret x. (* <- weak secrecy *) (* false *)
+
+process
+  new k:dkey; out(c,ek(k));
+  out(c,enc(x,ek(k)))

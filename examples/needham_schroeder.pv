@@ -1,0 +1,111 @@
+(*
+Needham-Schroeder public key protocol
+
+Message 1: A -> B : { Na, A }pkB
+Message 2: B -> A : { Na, Nb }pkA
+Message 3: A -> B : { Nb }pkB
+
+*)
+
+type id.
+type dkey.
+type ekey.
+
+(* Public key encryption *)
+
+fun pk(dkey):ekey.
+fun encrypt(bitstring, ekey):bitstring.
+fun decrypt(bitstring, dkey):bitstring
+  reduc forall x:bitstring, y:dkey; decrypt(encrypt(x,pk(y)),y) = x.
+
+
+(* public channel *)
+free c:channel.
+
+(* identities *)
+free A,B,I:id.
+
+(* imposter key *)
+free kI:dkey.
+
+event endA(id, id, bitstring, bitstring).
+event beginA(id, id, bitstring).
+event endB(id, id, bitstring, bitstring).
+event beginB(id, id, bitstring, bitstring).
+event endAI.
+event endIB.
+
+(* A *)
+let processA(idA:id, idB:id, skA:dkey, pkB:ekey) =
+  new nA:bitstring;
+  event beginA(idA,idB,nA);
+  out (c, encrypt((nA, idA), pkB));
+  in (c,m:bitstring);
+  let (=nA,nB:bitstring) = decrypt(m, skA) in
+  out (c, encrypt(nB, pkB));
+  event endA(idA,idB,nA,nB);
+  0.
+
+
+(* A talking to attacker *)
+let processAI(idA:id, idB:id, skA:dkey, pkB:ekey) =
+  new nA:bitstring;
+  out (c, encrypt((nA, idA), pk(kI)));
+  in (c,m:bitstring);
+  let (=nA,nB:bitstring) = decrypt (m, skA) in
+  out (c, encrypt(nB, pk(kI)));
+  event endAI();
+  0.
+
+
+(* B *)
+let processB(idB:id, idA:id, skB:dkey, pkA:ekey) =
+  in (c,m:bitstring);
+  let (nA:bitstring, =idA) = decrypt(m, skB) in
+  new nB:bitstring;
+  event beginB(idA,idB,nA,nB);
+  out (c, encrypt((nA, nB),pkA));
+  in (c, m2:bitstring);
+  let (=nB) = decrypt(m2, skB) in
+  event endB(idA,idB,nA,nB);
+  0.
+
+
+(* B talking to attacker *)
+let processIB(idB:id, idA:id, skB:dkey, pkA:ekey) =
+  in (c,m:bitstring);
+  let (nA:bitstring, =I) = decrypt (m, skB) in
+  new nB:bitstring;
+  out (c, encrypt((nA, nB),pk(kI)));
+  in (c, m2:bitstring);
+  let (=nB) = decrypt (m2, skB) in
+  event endIB();
+  0.
+
+
+query id1:id, id2:id, n1:bitstring, n2:bitstring;
+  event(endA(id1,id2,n1,n2)).
+query id1:id, id2:id, n1:bitstring, n2:bitstring;
+  event(endB(id1,id2,n1,n2)).
+query event(endAI()).
+query event(endIB()).
+query id1:id, id2:id, n1:bitstring, n2:bitstring;
+  event(endA(id1,id2,n1,n2)) ==> event(beginB(id1,id2,n1,n2)).
+query id1:id, id2:id, n1:bitstring, n2:bitstring;
+  event(endA(id1,id2,n1,n2)) ==> inj-event(beginB(id1,id2,n1,n2)).
+query id1:id, id2:id, n1:bitstring, n2:bitstring; (* false *)
+  event(endB(id1,id2,n1,n2)) ==> event(beginA(id1,id2,n1)).
+query id1:id, id2:id, n1:bitstring, n2:bitstring; (* false *)
+  event(endB(id1,id2,n1,n2)) ==> inj-event(beginA(id1,id2,n1)).
+
+
+process
+  new kA:dkey; new kB:dkey;
+  out (c, pk(kA)); out (c, pk(kB));
+  !(  processA(A, B, kA, pk(kB)) | processB(A, B, kA, pk(kB))
+    | processAI(A, B, kA, pk(kB)) | processIB(A, B, kA, pk(kB)))
+  | !(processA(B, A, kB, pk(kA)) | processB(B, A, kB, pk(kA))
+    | processAI (B, A, kB, pk(kA))| processIB(B, A, kB, pk(kA)))
+
+(* Note that the attack against the protocol only shows when the honest parties
+are also talking to the attacker *)

@@ -1,0 +1,62 @@
+(* channel *)
+free c:channel.
+
+type id.
+type key.
+type nonce.
+
+(* identifiers *)
+free A,B:id.
+
+(* Symmetric Encryption *)
+fun encrypt(bitstring, key):bitstring.
+fun decrypt(bitstring, key):bitstring
+  reduc forall m:bitstring, k:key; decrypt(encrypt(m,k),k)=m.
+
+event beginA(id, id, bitstring).
+event beginB(id, id, bitstring).
+event endA(id, id, bitstring).
+event endB(id, id, bitstring).
+
+
+(* Alice *)
+let alice(idA:id, idB:id, kAB:key)=
+  in (c, n1:nonce);
+  new m1:bitstring; new n2:nonce;
+  event beginA(idA,idB,m1);
+  out (c, encrypt((idB,m1,n1,n2),kAB));
+  in (c,mB:bitstring);
+  let (m2:bitstring, =n1, =n2) = decrypt(mB, kAB) in
+  event endA(idB,idA,m2);
+  0.
+
+
+(* Bob *)
+let bob(idA:id, idB:id, kAB:key)=
+  new n1:nonce;
+  out (c,n1);
+  in (c,mA:bitstring);
+  let (=idB,m1:bitstring,=n1,n2:nonce) = decrypt(mA,kAB) in
+  event endB(idA,idB,m1);
+  new m2:bitstring;
+  event beginB(idB,idA,m2);
+  out(c,encrypt((m2,n1,n2),kAB));
+  0.
+
+
+query id1:id, id2:id, xm:bitstring;
+  event(endB(id1,id2,xm)).
+query id1:id, id2:id, xm:bitstring;
+  event(endB(id1,id2,xm)) ==> event(beginA(id1,id2,xm)).
+query id1:id, id2:id, xm:bitstring;
+  event(endB(id1,id2,xm)) ==> inj-event(beginA(id1,id2,xm)).
+query id1:id, id2:id, xm:bitstring;
+  event(endA(id1,id2,xm)) ==> event(beginB(id1,id2,xm)).
+query id1:id, id2:id, xm:bitstring;
+  event(endA(id1,id2,xm)) ==> inj-event(beginB(id1,id2,xm)).
+
+process
+  new kAB:key;
+  !( (alice(A, B, kAB) | bob(A, B, kAB))
+    | (alice(B, A, kAB) | bob(B, A, kAB))
+  )

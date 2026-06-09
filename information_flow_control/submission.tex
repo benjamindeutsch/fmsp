@@ -1,0 +1,168 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[cm]{fullpage}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{xspace}
+\usepackage[english]{babel}
+\usepackage{fancyhdr}
+\usepackage{titling}
+\usepackage{framed}
+\usepackage{stmaryrd}
+\usepackage{mathpartir}
+\usepackage{stix}
+\usepackage{xcolor}
+%\renewcommand{\thesection}{Task \projnumber.\arabic{section}:}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%         exercise-specific macros       %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\mcall}[2]{#1(#2)}
+\newcommand{\call}[2]{\mcall{\textit{#1}}{#2}}
+\newcommand{\step}{\rightarrow}
+\newcommand{\nstep}{\overset{*}{\rightarrow}}
+\newcommand{\update}[3]{#1[#2 \mapsto #3]}
+\newcommand{\run}[2]{\llbracket #1 \rrbracket #2}
+\newcommand{\loweq}{\mathbin{=_L}}
+\newcommand{\tainted}[1]{\textcolor{red}{#1}}
+\newcommand{\untainted}[1]{\textcolor{blue}{#1}}
+
+\newcommand{\config}[1]{\ensuremath{\left\langle #1 \right\rangle}\xspace}
+\newcommand{\ttt}[1]{\texttt{#1}}
+\newcommand{\proves}{\vdash}
+\newcommand{\sth}{\ensuremath{.\;}\xspace}
+\newcommand\set[1]{\ensuremath{\{#1\}}}
+\newcommand{\WHILE}[1]{\ensuremath{\mathsf{while}\ #1 \ \mathsf{do}}\xspace}
+\newcommand{\IF}{\ensuremath{\mathsf{if}}\xspace}
+\newcommand{\THEN}{\ensuremath{\mathsf{then}}\xspace}
+\newcommand{\ELSE}{\ensuremath{\mathsf{else}}\xspace}
+\newcommand{\SKIP}{\ensuremath{\mathsf{skip}}\xspace}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% This part needs customization from you %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% please enter your name and matriculation number here
+%DONE
+\newcommand{\name}{Benjamin Deutsch}
+\newcommand{\matriculation}{12215881}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%           End of customization         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\projnumber}{3}
+\newcommand{\Title}{IFC and Noninterference}
+\setlength{\headheight}{15.2pt}
+\setlength{\headsep}{20pt}
+\setlength{\textheight}{680pt}
+\pagestyle{fancy}
+\fancyhf{} 
+\fancyhead[L]{Project \projnumber\ -- \Title}
+\fancyhead[C]{}
+\fancyhead[R]{\name{} (\matriculation)}
+\renewcommand{\headrulewidth}{0.4pt}
+\fancyfoot[C]{\thepage}
+
+
+\begin{document}
+\thispagestyle{empty}
+\noindent\framebox[\linewidth]{%
+ \begin{minipage}{\linewidth}%
+ \hspace*{5pt} \textbf{Formal Methods for Security and Privacy (SS26)} \hfill Prof.~Matteo Maffei \hspace*{5pt}\\
+
+ \begin{center}
+  {\bf\Large Project \projnumber~-- \Title}
+ \end{center}
+
+ \vspace*{5pt}\hspace*{5pt}\name{} (\matriculation) \hfill TU Wien \hspace*{5pt}
+\end{minipage}%
+}
+\vspace{0.5cm}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% README
+% remember to fill the macros \matriculation and \name
+
+
+\setcounter{section}{3}
+\section{Noninterference Analysis}
+\section{Relaxing Noninterference}
+\subsection{Tax Bracket Calculation}
+Nia analysis of program in Figure 4 will output that the program is interferant.
+As in the lecture, we can represent the states of the memory for each variable using
+$\oplus$ $\circledcirc$ and $\ominus$. Consider the following two states of the memory:
+\begin{align*}
+    m_1 &: \{\{\untainted{lwinner: \oplus\circledcirc\ominus}, \tainted{hbidA: \ominus}, \tainted{hbidB: \oplus}\}\} \\
+    m_2 &: \{\{\untainted{lwinner: \oplus\circledcirc\ominus}, \tainted{hbidA: \oplus}, \tainted{hbidB: \ominus}\}\}.
+\end{align*}
+
+To process line 1, we apply Propagate-Taint on both traces to get the following states:
+\begin{align*}
+    m_1 &: \{\{\untainted{lwinner: \ominus}, \tainted{hbidA: \ominus}, \tainted{hbidB: \oplus}\}\} \\
+    m_2 &: \{\{\untainted{lwinner: \ominus}, \tainted{hbidA: \oplus}, \tainted{hbidB: \ominus}\}\}.
+\end{align*}
+
+To process line 3, we need to apply the Raise-Context-Step rule, since the control flow depends on
+tainted variables. Therefore, until joining at line 11, the context is now tainted. Note that 
+the trace starting with $m_1$, is now before line 4, since the condition is true in that trace. 
+The other trace is before line 6, since the condition is false in that trace.
+
+Now, we can apply Propagate-Taint on line 4 for the first trace to get 
+\begin{align*}
+    m_1 &: \{\{\tainted{lwinner: \oplus}, \tainted{hbidA: \ominus}, \tainted{hbidB: \oplus}\}\}. \\
+\end{align*}
+
+$lwinner$ is now tainted, since it was assigned under a tainted context. At this point, the first 
+trace is before line 11, waiting to join with the second trace. 
+
+On the second trace, we can apply Propagate-Taint to process line 6, since the current context is 
+already tainted. As the condition is true, the trace is now before line 7. To process line 7, we can 
+apply Propagate-Taint again to get
+\begin{align*}
+    m_2 &: \{\{\tainted{lwinner: \circledcirc}, \tainted{hbidA: \oplus}, \tainted{hbidB: \ominus}\}\}. \\
+\end{align*}
+
+Now, both traces are before line 11. Therefore, we can apply the Join rule, to get
+\begin{align*}
+    m_1 &: \{\{\tainted{lwinner: \oplus}, \tainted{hbidA: \ominus}, \tainted{hbidB: \oplus}\}\} \\
+    m_2 &: \{\{\tainted{lwinner: \circledcirc}, \tainted{hbidA: \oplus}, \tainted{hbidB: \ominus}\}\}. \\
+\end{align*}
+
+Note that, since the value of $lwinner$ differs in the two traces and it is tainted in both traces, 
+it remains tainted after the join. After processing the two remaining assignments using Propagate-Taint, 
+we get the following states:
+\begin{align*}
+    m_1 &: \{\{\tainted{lwinner: \oplus}, \untainted{hbidA: \circledcirc}, \untainted{hbidB: \circledcirc}\}\} \\
+    m_2 &: \{\{\tainted{lwinner: \circledcirc}, \untainted{hbidA: \circledcirc}, \untainted{hbidB: \circledcirc}\}\}. \\
+\end{align*}
+
+Since the public variable $lwinner$ is tainted, the program is interferant.
+
+\subsection{Controlled Information Leaks: Abstract Noninterference}
+My implementation first checks whether the variables $hbidA$ and $hbidB$ are present in the variables list.
+If so, then $hbidA$ and $hbidB$ are added to the observed variable list, since those are needed to compute 
+$\phi$. Also, if $hbidA$ and $hbidB$ are present, auction\_winner will returns a z3 expression calculating
+the winner of the auction. If $hbidA$ and $hbidB$ are not present, the the function returns $0$. Finally,
+also relate\_executions checks for the presence of $hbidA$ and $hbidB$. If they are not present, it simply 
+checks low variable equivalence. If $hbidA$ and $hbidB$ are present, then it additionally checks that the 
+winner of the auction is the same in both traces.
+
+\paragraph{simple\_winner.while.} This program is wrongly labeled as interferent, since the if statement is 
+the last statement of the program. The abstraction of $\mathrm{Seq}(c_1,c_2)$ only checks whether the $c_1$ 
+might require a join, but not whether $c_2$ requires one. Therefore, if the statement requiring a join is 
+the last statement of the program, the $\mathrm{Join}$ rule is never applied, which is why $lwinner$ stays 
+tainted in the end.
+
+To fix this, we could 
+\begin{itemize}
+    \item change the $\mathrm{Seq}$ abstraction to also check whether $c_2$ is a possible join point, or
+    \item add a trivial statement (e.g. a self-assignment, like it is done in simple.while) after 
+          the if statement, enabling the $\mathrm{Join}$ rule to be applied.
+\end{itemize}
+
+\end{document}
+

@@ -1,0 +1,44 @@
+type id.
+type key.
+
+fun enc(bitstring, key):bitstring.
+reduc forall m:bitstring, k:key;
+  dec(enc(m,k),k) = m.
+
+free net:channel.
+
+free m: bitstring [private].
+
+noninterf m.
+
+event begin(id, id, bitstring).
+event end(id, id, bitstring).
+
+query A, B:id, m: bitstring;
+    event(end(A, B, m)) ==> inj-event(begin(A, B, m)).
+query A,B:id, m: bitstring;
+    event(end(A, B, m)).
+
+let Initiator(A, B:id, k:key) = 
+    new n:bitstring;
+    out(net, n);
+    in(net, cipher:bitstring);
+    let(=A,m: bitstring,=n) = dec(cipher,k) in 
+    event end(A, B, m).
+
+let Responder(A,B: id, k:key) =
+    in(net, n:bitstring);
+    new m:bitstring;
+    event begin(A, B, m);
+    out(net, enc((A, m, n), k)).
+
+free A, B: id.
+
+process 
+    !(
+
+    new k:key;
+
+    !(Initiator(A, B, k) | Responder(A, B, k)
+    | Initiator(B, A, k) | Responder(B, A, k))
+    )

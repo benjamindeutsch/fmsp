@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+                      <html>
+                    <head>
+                    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+                    <title>ProVerif: equations and destructors</title>
+                    <link rel="stylesheet" href="cssproverif.css">
+                                                                           </head>
+                                                                         <body>
+                                                                         <H1>Equations</H1>
+<H2>Linear part</H2>
+Initial equations:
+<ul>
+
+<li><span class="fun">exp</span>(<span class="fun">exp</span>(<span class="fun">g</span>,<span class="var">a</span>),<span class="var">b</span>) <span class="conn">=</span> <span class="fun">exp</span>(<span class="fun">exp</span>(<span class="fun">g</span>,<span class="var">b</span>),<span class="var">a</span>)
+</ul>
+Completed equations:
+<ul>
+
+<li><span class="fun">exp</span>(<span class="fun">exp</span>(<span class="fun">g</span>,<span class="var">a</span>),<span class="var">b</span>) <span class="conn">=</span> <span class="fun">exp</span>(<span class="fun">exp</span>(<span class="fun">g</span>,<span class="var">b</span>),<span class="var">a</span>)
+</ul>
+<H2>Convergent part</H2>
+No equation.<br>
+<H1>Completed destructors</H2>
+(<span class="fun">fail-any_type</span> <span class="fun">||</span> <span class="var">@mayfail_v</span>) <span class="conn">=&gt;</span> <span class="fun">fail-any_type</span><br>
+(<span class="var">v</span> <span class="fun">||</span> <span class="var">@mayfail_v</span>) <span class="conn">=&gt;</span> <span class="var">@mayfail_v</span> if <span class="var">v</span> <span class="conn">&ne;</span> <span class="fun">true</span><br>
+(<span class="fun">true</span> <span class="fun">||</span> <span class="var">@mayfail_v</span>) <span class="conn">=&gt;</span> <span class="fun">true</span><br>
+<br><span class="fun">verify</span>(<span class="var">v</span>,<span class="fun">fail-any_type</span>) <span class="conn">=&gt;</span> <span class="fun">fail-any_type</span><br>
+<span class="fun">verify</span>(<span class="fun">fail-any_type</span>,<span class="var">@mayfail_v</span>) <span class="conn">=&gt;</span> <span class="fun">fail-any_type</span><br>
+<span class="fun">verify</span>(<span class="var">v</span>,<span class="var">v_1</span>) <span class="conn">=&gt;</span> <span class="fun">fail-any_type</span> if (forall <span class="fun">@gen</span>,<span class="fun">@gen_1</span>, (<span class="var">v</span> <span class="conn">&ne;</span> <span class="fun">sign</span>(<span class="fun">@gen_1</span>,<span class="fun">@gen</span>) | <span class="var">v_1</span> <span class="conn">&ne;</span> <span class="fun">vk</span>(<span class="fun">@gen</span>)))<br>
+<span class="fun">verify</span>(<span class="fun">sign</span>(<span class="var">m</span>,<span class="var">k</span>),<span class="fun">vk</span>(<span class="var">k</span>)) <span class="conn">=&gt;</span> <span class="var">m</span><br>
+<br><span class="fun">not</span>(<span class="fun">fail-any_type</span>) <span class="conn">=&gt;</span> <span class="fun">fail-any_type</span><br>
+<span class="fun">not</span>(<span class="var">v</span>) <span class="conn">=&gt;</span> <span class="fun">true</span> if <span class="var">v</span> <span class="conn">&ne;</span> <span class="fun">true</span><br>
+<span class="fun">not</span>(<span class="fun">true</span>) <span class="conn">=&gt;</span> <span class="fun">false</span><br>
+<br><span class="fun">is_nat</span>(<span class="fun">fail-any_type</span>) <span class="conn">=&gt;</span> <span class="fun">fail-any_type</span><br>
+<span class="fun">is_nat</span>(<span class="var">v</span>) <span class="conn">=&gt;</span> <span class="fun">false</span> if <span class="fun">is_not_nat</span>(<span class="var">v</span>)<br>
+<span class="fun">is_nat</span>(<span class="var">v</span>) <span class="conn">=&gt;</span> <span class="fun">true</span> if <span class="fun">is_nat</span>(<span class="var">v</span>)<br>
+<br><span class="fun">getmsg</span>(<span class="fun">fail-any_type</span>) <span class="conn">=&gt;</span> <span class="fun">fail-any_type</span><br>
+<span class="fun">getmsg</span>(<span class="var">v</span>) <span class="conn">=&gt;</span> <span class="fun">fail-any_type</span> if (forall <span class="fun">@gen</span>,<span class="fun">@gen_1</span>, <span class="var">v</span> <span class="conn">&ne;</span> <span class="fun">sign</span>(<span class="fun">@gen_1</span>,<span class="fun">@gen</span>))<br>
+<span class="fun">getmsg</span>(<span class="fun">sign</span>(<span class="var">m</span>,<span class="var">k</span>)) <span class="conn">=&gt;</span> <span class="var">m</span><br>
+<br><span class="fun">decrypt</span>(<span class="fun">fail-any_type</span>,<span class="var">@mayfail_v</span>) <span class="conn">=&gt;</span> <span class="fun">fail-any_type</span><br>
+<span class="fun">decrypt</span>(<span class="var">v</span>,<span class="fun">fail-any_type</span>) <span class="conn">=&gt;</span> <span class="fun">fail-any_type</span><br>
+<span class="fun">decrypt</span>(<span class="var">v</span>,<span class="var">v_1</span>) <span class="conn">=&gt;</span> <span class="fun">fail-any_type</span> if (forall <span class="fun">@gen</span>, <span class="var">v</span> <span class="conn">&ne;</span> <span class="fun">encrypt</span>(<span class="fun">@gen</span>,<span class="var">v_1</span>))<br>
+<span class="fun">decrypt</span>(<span class="fun">encrypt</span>(<span class="var">m</span>,<span class="var">k</span>),<span class="var">k</span>) <span class="conn">=&gt;</span> <span class="var">m</span><br>
+<br>(<span class="var">v</span> <span class="fun">&ge;</span> <span class="fun">fail-any_type</span>) <span class="conn">=&gt;</span> <span class="fun">fail-any_type</span><br>
+(<span class="fun">fail-any_type</span> <span class="fun">&ge;</span> <span class="var">@mayfail_v</span>) <span class="conn">=&gt;</span> <span class="fun">fail-any_type</span><br>
+(<span class="var">v</span> <span class="fun">&ge;</span> <span class="var">v_1</span>) <span class="conn">=&gt;</span> <span class="fun">fail-any_type</span> if <span class="fun">is_not_nat</span>(<span class="var">v_1</span>)<br>
+(<span class="var">v</span> <span class="fun">&ge;</span> <span class="var">v_1</span>) <span class="conn">=&gt;</span> <span class="fun">fail-any_type</span> if <span class="fun">is_not_nat</span>(<span class="var">v</span>)<br>
+(<span class="var">v</span> <span class="fun">&ge;</span> <span class="var">v_1</span>) <span class="conn">=&gt;</span> <span class="fun">false</span> if <span class="var">v_1</span> <span class="conn">&ge;</span> <span class="var">v</span> <span class="fun">+</span> 1<br>
+(<span class="var">v</span> <span class="fun">&ge;</span> <span class="var">v_1</span>) <span class="conn">=&gt;</span> <span class="fun">true</span> if <span class="var">v</span> <span class="conn">&ge;</span> <span class="var">v_1</span><br>
+<br>(<span class="var">v</span> <span class="fun">&gt;</span> <span class="fun">fail-any_type</span>) <span class="conn">=&gt;</span> <span class="fun">fail-any_type</span><br>
+(<span class="fun">fail-any_type</span> <span class="fun">&gt;</span> <span class="var">@mayfail_v</span>) <span class="conn">=&gt;</span> <span class="fun">fail-any_type</span><br>
+(<span class="var">v</span> <span class="fun">&gt;</span> <span class="var">v_1</span>) <span class="conn">=&gt;</span> <span class="fun">fail-any_type</span> if <span class="fun">is_not_nat</span>(<span class="var">v_1</span>)<br>
+(<span class="var">v</span> <span class="fun">&gt;</span> <span class="var">v_1</span>) <span class="conn">=&gt;</span> <span class="fun">fail-any_type</span> if <span class="fun">is_not_nat</span>(<span class="var">v</span>)<br>
+(<span class="var">v</span> <span class="fun">&gt;</span> <span class="var">v_1</span>) <span class="conn">=&gt;</span> <span class="fun">false</span> if <span class="var">v_1</span> <span class="conn">&ge;</span> <span class="var">v</span><br>
+(<span class="var">v</span> <span class="fun">&gt;</span> <span class="var">v_1</span>) <span class="conn">=&gt;</span> <span class="fun">true</span> if <span class="var">v</span> <span class="conn">&ge;</span> <span class="var">v_1</span> <span class="fun">+</span> 1<br>
+<br>(<span class="var">v</span> <span class="fun">&le;</span> <span class="fun">fail-any_type</span>) <span class="conn">=&gt;</span> <span class="fun">fail-any_type</span><br>
+(<span class="fun">fail-any_type</span> <span class="fun">&le;</span> <span class="var">@mayfail_v</span>) <span class="conn">=&gt;</span> <span class="fun">fail-any_type</span><br>
+(<span class="var">v</span> <span class="fun">&le;</span> <span class="var">v_1</span>) <span class="conn">=&gt;</span> <span class="fun">fail-any_type</span> if <span class="fun">is_not_nat</span>(<span class="var">v</span>)<br>
+(<span class="var">v</span> <span class="fun">&le;</span> <span class="var">v_1</span>) <span class="conn">=&gt;</span> <span class="fun">fail-any_type</span> if <span class="fun">is_not_nat</span>(<span class="var">v_1</span>)<br>
+(<span class="var">v</span> <span class="fun">&le;</span> <span class="var">v_1</span>) <span class="conn">=&gt;</span> <span class="fun">false</span> if <span class="var">v</span> <span class="conn">&ge;</span> <span class="var">v_1</span> <span class="fun">+</span> 1<br>
+(<span class="var">v</span> <span class="fun">&le;</span> <span class="var">v_1</span>) <span class="conn">=&gt;</span> <span class="fun">true</span> if <span class="var">v_1</span> <span class="conn">&ge;</span> <span class="var">v</span><br>
+<br>(<span class="var">v</span> <span class="fun">&lt;</span> <span class="fun">fail-any_type</span>) <span class="conn">=&gt;</span> <span class="fun">fail-any_type</span><br>
+(<span class="fun">fail-any_type</span> <span class="fun">&lt;</span> <span class="var">@mayfail_v</span>) <span class="conn">=&gt;</span> <span class="fun">fail-any_type</span><br>
+(<span class="var">v</span> <span class="fun">&lt;</span> <span class="var">v_1</span>) <span class="conn">=&gt;</span> <span class="fun">fail-any_type</span> if <span class="fun">is_not_nat</span>(<span class="var">v</span>)<br>
+(<span class="var">v</span> <span class="fun">&lt;</span> <span class="var">v_1</span>) <span class="conn">=&gt;</span> <span class="fun">fail-any_type</span> if <span class="fun">is_not_nat</span>(<span class="var">v_1</span>)<br>
+(<span class="var">v</span> <span class="fun">&lt;</span> <span class="var">v_1</span>) <span class="conn">=&gt;</span> <span class="fun">false</span> if <span class="var">v</span> <span class="conn">&ge;</span> <span class="var">v_1</span><br>
+(<span class="var">v</span> <span class="fun">&lt;</span> <span class="var">v_1</span>) <span class="conn">=&gt;</span> <span class="fun">true</span> if <span class="var">v_1</span> <span class="conn">&ge;</span> <span class="var">v</span> <span class="fun">+</span> 1<br>
+<br>(<span class="fun">fail-any_type</span> <span class="fun">&amp;&amp;</span> <span class="var">@mayfail_v</span>) <span class="conn">=&gt;</span> <span class="fun">fail-any_type</span><br>
+(<span class="var">v</span> <span class="fun">&amp;&amp;</span> <span class="var">@mayfail_v</span>) <span class="conn">=&gt;</span> <span class="fun">false</span> if <span class="var">v</span> <span class="conn">&ne;</span> <span class="fun">true</span><br>
+(<span class="fun">true</span> <span class="fun">&amp;&amp;</span> <span class="var">@mayfail_v</span>) <span class="conn">=&gt;</span> <span class="var">@mayfail_v</span><br>
+<br></body>
+</html>

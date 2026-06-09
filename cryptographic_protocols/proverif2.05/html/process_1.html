@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+                      <html>
+                    <head>
+                    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+                    <title>ProVerif: process 1</title>
+                    <link rel="stylesheet" href="cssproverif.css">
+                                                                           </head>
+                                                                         <body>
+                                                                         <H1>Process 1 (<A HREF="process_0.html" TARGET="process">process 0</A>, with let moved downwards)</H1>
+<a name=occ1 class="occ">{1}</a> <span class="keyword">new</span> <span class="name">k</span>: <span class="type">key</span>;<br>
+(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name=occ5 class="occ">{5}</a> <span class="keyword">new</span> <span class="name">n</span>: <span class="type">bitstring</span>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name=occ6 class="occ">{6}</a> <span class="keyword">new</span> <span class="name">m1</span>: <span class="type">bitstring</span>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name=occ3 class="occ">{3}</a> <span class="keyword">let</span> <span class="var">B_1</span>: <span class="type">id</span> = <span class="name">B</span> <span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name=occ2 class="occ">{2}</a> <span class="keyword">let</span> <span class="var">A_1</span>: <span class="type">id</span> = <span class="name">A</span> <span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name=occ7 class="occ">{7}</a> <span class="keyword">event</span> <span class="fun">begin1</span>(<span class="var">A_1</span>,<span class="var">B_1</span>,<span class="name">m1</span>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name=occ4 class="occ">{4}</a> <span class="keyword">let</span> <span class="var">k_1</span>: <span class="type">key</span> = <span class="name">k</span> <span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name=occ8 class="occ">{8}</a> <span class="keyword">out</span>(<span class="name">net</span>, <span class="fun">enc</span>(<span class="fun"></span>(<span class="var">B_1</span>,<span class="name">m1</span>,<span class="name">n</span>),<span class="var">k_1</span>));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name=occ9 class="occ">{9}</a> <span class="keyword">in</span>(<span class="name">net</span>, <span class="var">cipher</span>: <span class="type">bitstring</span>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name=occ10 class="occ">{10}</a> <span class="keyword">let</span> <span class="fun"></span>(=<span class="var">A_1</span>,<span class="var">m2</span>: <span class="type">bitstring</span>,=<span class="name">n</span>) = <span class="fun">dec</span>(<span class="var">cipher</span>,<span class="var">k_1</span>) <span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name=occ11 class="occ">{11}</a> <span class="keyword">event</span> <span class="fun">end2</span>(<span class="var">A_1</span>,<span class="var">B_1</span>,<span class="var">m2</span>)<br>
+) | (<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name=occ15 class="occ">{15}</a> <span class="keyword">in</span>(<span class="name">net</span>, <span class="var">cipher_1</span>: <span class="type">bitstring</span>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name=occ14 class="occ">{14}</a> <span class="keyword">let</span> <span class="var">k_2</span>: <span class="type">key</span> = <span class="name">k</span> <span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name=occ13 class="occ">{13}</a> <span class="keyword">let</span> <span class="var">B_2</span>: <span class="type">id</span> = <span class="name">B</span> <span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name=occ16 class="occ">{16}</a> <span class="keyword">let</span> <span class="fun"></span>(=<span class="var">B_2</span>,<span class="var">m1_1</span>: <span class="type">bitstring</span>,<span class="var">n_1</span>: <span class="type">bitstring</span>) = <span class="fun">dec</span>(<span class="var">cipher_1</span>,<span class="var">k_2</span>) <span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name=occ12 class="occ">{12}</a> <span class="keyword">let</span> <span class="var">A_2</span>: <span class="type">id</span> = <span class="name">A</span> <span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name=occ17 class="occ">{17}</a> <span class="keyword">event</span> <span class="fun">end1</span>(<span class="var">A_2</span>,<span class="var">B_2</span>,<span class="var">m1_1</span>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name=occ18 class="occ">{18}</a> <span class="keyword">event</span> <span class="fun">end1nomsg</span>(<span class="var">A_2</span>,<span class="var">B_2</span>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name=occ19 class="occ">{19}</a> <span class="keyword">new</span> <span class="name">m2_1</span>: <span class="type">bitstring</span>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name=occ20 class="occ">{20}</a> <span class="keyword">event</span> <span class="fun">begin2</span>(<span class="var">A_2</span>,<span class="var">B_2</span>,<span class="name">m2_1</span>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name=occ21 class="occ">{21}</a> <span class="keyword">out</span>(<span class="name">net</span>, <span class="fun">enc</span>(<span class="fun"></span>(<span class="var">A_2</span>,<span class="name">m2_1</span>,<span class="var">n_1</span>),<span class="var">k_2</span>))<br>
+)<br>
+<br>
+</body>
+</html>

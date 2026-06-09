@@ -1,0 +1,87 @@
+(* channel *)
+free net:channel.
+free att:channel. (* <- useless. To emphasize leaking information to the attacker *)
+
+(* free variables *)
+free accept: bitstring.
+free reject: bitstring.
+free n: bitstring [private].
+
+(* types *)
+type key.
+type sign_key.
+type ver_key.
+
+(* type converters *)
+fun vk2b(ver_key): bitstring [typeConverter].
+fun b2vk(bitstring): ver_key [typeConverter].
+
+(* events *)
+event clientBegin(bitstring).
+event clientEnd(bitstring).
+event serverAccept(bitstring).
+
+(* Symmetric Encryption *)
+fun encrypt(bitstring, key):bitstring.
+fun decrypt(bitstring, key):bitstring
+  reduc forall m:bitstring, k:key; decrypt(encrypt(m,k),k)=m.
+
+(* signature *)
+fun sign(bitstring, sign_key):bitstring.
+fun vk(sign_key):ver_key.
+reduc forall m:bitstring, k:sign_key;
+  verify(sign(m, k), vk(k)) = m. (* this only simplifies if the signature is authentic *)
+
+reduc forall m:bitstring, k:sign_key;
+  getmsg(sign(m, k)) = m. (* <- attacker can get the message from the signature *)
+
+fun sessionId(key): bitstring. (* session identifier generator *)
+
+(*========================================================*)
+(*======================== queries =======================*)
+(*========================================================*)
+
+query sid: bitstring; event(clientEnd(sid)). (* reachablility *)
+query sid: bitstring; event(serverAccept(sid)). (* reachability *)
+(* authentication: if a server accepts, they know they are talking to a legitimate client *)
+query sid: bitstring; 
+  event(serverAccept(sid)) ==> inj-event(clientBegin(sid)). 
+
+query attacker(n). (* secrecy of the nonce *)
+
+(*========================================================*)
+(*============== description of the protocol =============*)
+(*========================================================*)
+
+(* Client *)
+let Client(gab: key, skC: sign_key)=
+    event clientBegin(sessionId(gab));
+    out(net, encrypt(vk2b(vk(skC)), gab));
+    in(net, m: bitstring);
+    (*let n: bitstring = decrypt(m, gab) in*)
+    out(net, encrypt(sign((sessionId(gab), n), skC), gab));
+    in(net, r: bitstring);
+    let (=accept) = decrypt(r, gab) in
+    event clientEnd(sessionId(gab));
+    0.
+
+(* Server *)
+let Server(gab: key)=
+    in(net, m1: bitstring);
+    let vkC: ver_key = b2vk(decrypt(m1, gab)) in
+    (*new n: bitstring;*)
+    out(net, encrypt(n, gab));
+    in(net, m2: bitstring);
+    let m2_dec: bitstring = decrypt(m2, gab) in
+    let (=sessionId(gab), =n) = verify(m2_dec, vkC) in
+        out(net, encrypt(accept, gab));
+        event serverAccept(sessionId(gab))
+    else
+        out(net, encrypt(reject, gab)).
+
+process
+    !(new skC: sign_key; (* multiple clients *)
+    !(new gab: key; (* each client has multiple sessions *)
+    out(att, sessionId(gab));
+    out(att, vk(skC));
+    Client(gab, skC) | Server(gab)))

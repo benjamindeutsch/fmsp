@@ -1,0 +1,15 @@
+lstatus = 0;
+
+IF hbidA < hbidB THEN
+  lstatus = 0
+ELSE
+  IF hbidB < hbidA THEN
+    lstatus = 0
+  ELSE
+    IF hbidA < 10 THEN
+      lstatus = 1
+    ELSE
+      lstatus = 2
+    END
+  END
+END

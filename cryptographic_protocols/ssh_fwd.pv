@@ -1,0 +1,129 @@
+(* channel *)
+free net:channel.
+free priv:channel [private]. (* a private channel to exchange public keys *)
+free att:channel. (* <- useless. To emphasize leaking information to the attacker *)
+
+(* types *)
+type G. (* group element *)
+type Z. (* exponent *)
+type key.
+type sign_key.
+type ver_key.
+
+(* free variables *)
+const accept: bitstring.
+const reject: bitstring.
+const g : G. (* the group generator *)
+free message: bitstring [private].
+
+(* type converters *)
+fun vk2b(ver_key): bitstring [typeConverter].
+fun b2vk(bitstring): ver_key [typeConverter].
+
+(* events *)
+event clientBegin(sign_key). (* skC *)
+event clientKeyExchanged(sign_key, ver_key). (* skC, vkS *)
+event clientEnd(sign_key, ver_key). (* skC, vkS *)
+event serverBegin(sign_key). (* skS *)
+event serverAccept(sign_key, ver_key). (* skS, vkC *)
+event serverEnd(sign_key, ver_key). (* skS, vkC *)
+
+(* exponentiation *)
+fun exp(G, Z): G.
+equation forall a:Z, b:Z;
+    exp(exp(g, a), b) = exp(exp(g, b), a).
+
+(* Symmetric Encryption *)
+fun encrypt(bitstring, G):bitstring.
+fun decrypt(bitstring, G):bitstring
+  reduc forall m:bitstring, k:G; decrypt(encrypt(m,k),k)=m.
+
+fun sessionId(G,G): bitstring. (* session identifier generator *)
+
+(* signature *)
+fun sign(bitstring, sign_key):bitstring.
+fun vk(sign_key):ver_key.
+reduc forall m:bitstring, k:sign_key;
+  verify(sign(m, k), vk(k)) = m. (* this only simplifies if the signature is authentic *)
+
+reduc forall m:bitstring, k:sign_key;
+  getmsg(sign(m, k)) = m. (* <- attacker can get the message from the signature *)
+
+(*========================================================*)
+(*======================== queries =======================*)
+(*========================================================*)
+
+query skC: sign_key, skS: sign_key; event(clientEnd(skC, vk(skS))). (* reachablility *)
+query skS: sign_key, skC: sign_key; event(serverEnd(skS, vk(skC))). (* reachability *)
+
+(* secrecy of the message *)
+query attacker(message).
+
+(*========================================================*)
+(*============== description of the protocol =============*)
+(*========================================================*)
+
+(* Client *)
+let Client(skC: sign_key)=
+    event clientBegin(skC);
+    (* verification key distribution *)
+    out(priv, vk(skC));
+    in(priv, vkS: ver_key);
+    (* Diffie-Hellman *)
+    new b: Z;
+    let gb: G = exp(g, b) in
+    in(net, ga: G);
+    out(net, gb);
+    let gab: G = exp(ga, b) in
+    let sid: bitstring = sessionId(ga, gb) in
+    in(net, (=vkS, m_sid: bitstring));
+    let (=sid) = verify(m_sid, vkS) in
+    event clientKeyExchanged(skC, vkS);
+    (* Authentication *)
+    out(net, encrypt(vk2b(vk(skC)), gab));
+    in(net, m_n: bitstring);
+    let n: bitstring = decrypt(m_n, gab) in
+    out(net, encrypt(sign((sid, n), skC), gab));
+    in(net, r: bitstring);
+    let (=accept) = decrypt(r, gab) in
+    (* send secret message *)
+    out(net, encrypt(message, gab));
+    event clientEnd(skC, vkS);
+    0.
+
+(* Server *)
+let Server(skS: sign_key)=
+    event serverBegin(skS);
+    (* verification key distribution *)
+    in(priv, vkC: ver_key);
+    out(priv, vk(skS));
+    (* Diffie-Hellman *)
+    new a: Z;
+    let ga: G = exp(g, a) in
+    out(net, ga);
+    in(net, gb: G);
+    let gab: G = exp(gb, a) in
+    let sid: bitstring = sessionId(ga, gb) in
+    out(net, (vk(skS), sign(sid, skS)));
+    (* Authentication *)
+    in(net, m1: bitstring);
+    let (=vkC) = b2vk(decrypt(m1, gab)) in
+    new n: bitstring;
+    out(net, encrypt(n, gab));
+    in(net, m2: bitstring);
+    let m2_dec: bitstring = decrypt(m2, gab) in
+    let (=sid, =n) = verify(m2_dec, vkC) in
+        event serverAccept(skS, vkC);
+        out(net, encrypt(accept, gab));
+        in(net, m_message: bitstring);
+        (* receive secret message *)
+        let (=message) = decrypt(m_message, gab) in
+        event serverEnd(skS, vkC)
+    else
+        out(net, encrypt(reject, gab)).
+
+process
+    new skS: sign_key;
+    !(new skC: sign_key; out(att, vk(skC)); !Client(skC)) | 
+    !(out(att, vk(skS)); !Server(skS)) |
+    (phase 1; out(att, skS))

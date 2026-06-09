@@ -1,0 +1,5 @@
+IF l1 THEN
+    l2 = 1
+ELSE
+    l2 = 2
+END

@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+                      <html>
+                    <head>
+                    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+                    <title>ProVerif: main result page</title>
+                    <link rel="stylesheet" href="cssproverif.css">
+                                                                           </head>
+                                                                         <body>
+                                                                         <H1>ProVerif results</H1>
+<A HREF="eq.html">Equations & Destructors</A><br>
+<A HREF="process_0.html" TARGET="process">Process 0</A> (that is, the initial process)<br>
+<UL>
+<LI><A HREF="process_1.html" TARGET="process">Process 1</A> (that is, <A HREF="process_0.html" TARGET="process">process 0</A>, with let moved downwards)<br>
+<UL> <LI><span class="query">Query <span class="keyword">not </span>event(<span class="fun">clientEnd</span>(<span class="var">skC_2</span>,<span class="fun">vk</span>(<span class="var">skS_2</span>))) in <A HREF="process_1.html" TARGET="process">process 1</A>.<br>
+</span>
+<A HREF="clauses1.html" TARGET="clauses">Clauses</A><br>
+<A HREF="compclauses1.html">Completed clauses</A><br>
+<UL>
+<LI>goal reachable: <span class="pred">attacker</span>(<span class="fun">encrypt</span>(<span class="var">n_2</span>,<span class="fun">exp</span>(<span class="fun">exp</span>(<span class="fun">g</span>,<span class="var">a_1</span>),<span class="var">b_1</span>))) <span class="conn">-&gt;</span> <span class="pred">event</span>(<span class="fun">clientEnd</span>(<span class="var">skC_2</span>,<span class="fun">vk</span>(<span class="name">skS</span>[])))<br>
+Abbreviations:
+<ul>
+
+<li><span class="var">skC_2</span> <span class="conn">=</span> <span class="name">skC</span>[!1 = <span class="var">@sid</span>]
+<li><span class="var">a_1</span> <span class="conn">=</span> <span class="name">a</span>[vkC = <span class="fun">vk</span>(<span class="var">skC_2</span>),!2 = <span class="var">@sid_1</span>,!1 = <span class="var">@sid_2</span>]
+<li><span class="var">b_1</span> <span class="conn">=</span> <span class="name">b</span>[vkS = <span class="fun">vk</span>(<span class="name">skS</span>[]),!2 = <span class="var">@sid_3</span>,!1 = <span class="var">@sid</span>]
+</ul>
+<A HREF="derivation1.html">Derivation</A> <A HREF="derivationexplained1.html">Explained derivation</A><br>
+<A HREF="unifyDeriv1.html" TARGET="unifderiv">Unify derivation</A><br>
+<A HREF="trace1.html">Trace</A><br>
+<A HREF="trace1.pdf">Trace graph</A><br>
+</UL>
+<span class="result">RESULT <span class="keyword">not </span>event(<span class="fun">clientEnd</span>(<span class="var">skC_2</span>,<span class="fun">vk</span>(<span class="var">skS_2</span>))) is <span class="falseresult">false</span>.</span><br>
+<LI><span class="query">Query <span class="keyword">not </span>event(<span class="fun">serverEnd</span>(<span class="var">skS_2</span>,<span class="fun">vk</span>(<span class="var">skC_2</span>))) in <A HREF="process_1.html" TARGET="process">process 1</A>.<br>
+</span>
+<A HREF="clauses2.html" TARGET="clauses">Clauses</A><br>
+<A HREF="compclauses2.html">Completed clauses</A><br>
+<UL>
+<LI>goal reachable: <span class="pred">attacker</span>(<span class="fun">encrypt</span>(<span class="var">n_2</span>,<span class="fun">exp</span>(<span class="fun">exp</span>(<span class="fun">g</span>,<span class="var">a_1</span>),<span class="var">b_1</span>))) <span class="conn">-&gt;</span> <span class="pred">event</span>(<span class="fun">serverEnd</span>(<span class="name">skS</span>[],<span class="fun">vk</span>(<span class="var">skC_2</span>)))<br>
+Abbreviations:
+<ul>
+
+<li><span class="var">skC_2</span> <span class="conn">=</span> <span class="name">skC</span>[!1 = <span class="var">@sid</span>]
+<li><span class="var">a_1</span> <span class="conn">=</span> <span class="name">a</span>[vkC = <span class="fun">vk</span>(<span class="var">skC_2</span>),!2 = <span class="var">@sid_1</span>,!1 = <span class="var">@sid_2</span>]
+<li><span class="var">b_1</span> <span class="conn">=</span> <span class="name">b</span>[vkS = <span class="fun">vk</span>(<span class="name">skS</span>[]),!2 = <span class="var">@sid_3</span>,!1 = <span class="var">@sid</span>]
+</ul>
+<A HREF="derivation2.html">Derivation</A> <A HREF="derivationexplained2.html">Explained derivation</A><br>
+<A HREF="unifyDeriv2.html" TARGET="unifderiv">Unify derivation</A><br>
+<A HREF="trace2.html">Trace</A><br>
+<A HREF="trace2.pdf">Trace graph</A><br>
+</UL>
+<span class="result">RESULT <span class="keyword">not </span>event(<span class="fun">serverEnd</span>(<span class="var">skS_2</span>,<span class="fun">vk</span>(<span class="var">skC_2</span>))) is <span class="falseresult">false</span>.</span><br>
+<LI><span class="query">Query <span class="keyword">not </span><span class="pred">attacker_p1</span>(<span class="name">message</span>[]) in <A HREF="process_1.html" TARGET="process">process 1</A>.<br>
+</span>
+<A HREF="clauses3.html" TARGET="clauses">Clauses</A><br>
+<A HREF="compclauses3.html">Completed clauses</A><br>
+<span class="result">RESULT <span class="keyword">not </span><span class="pred">attacker_p1</span>(<span class="name">message</span>[]) is <span class="trueresult">true</span>.</span><br>
+</UL> </UL>
+<br>
+<HR>
+<H2>Verification summary:</H2>
+<UL>
+<LI>Query <span class="keyword">not </span>event(<span class="fun">clientEnd</span>(<span class="var">skC_2</span>,<span class="fun">vk</span>(<span class="var">skS_2</span>))) is <span class="falseresult">false</span>.
+<LI>Query <span class="keyword">not </span>event(<span class="fun">serverEnd</span>(<span class="var">skS_2</span>,<span class="fun">vk</span>(<span class="var">skC_2</span>))) is <span class="falseresult">false</span>.
+<LI>Query <span class="keyword">not </span><span class="pred">attacker_p1</span>(<span class="name">message</span>[]) is <span class="trueresult">true</span>.
+</UL><HR>
+</body>
+</html>

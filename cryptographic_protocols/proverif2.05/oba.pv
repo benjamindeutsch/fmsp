@@ -1,0 +1,5 @@
+free c:channel.
+
+process
+    new n: bitstring;
+    out(c, choice[n, (n,n)])
