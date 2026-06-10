@@ -1,0 +1,170 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[cm]{fullpage}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{xspace}
+\usepackage[english]{babel}
+\usepackage{fancyhdr}
+\usepackage{titling}
+\usepackage{framed}
+%\usepackage{stmaryrd}
+%\usepackage{mathpartir}
+%\usepackage{stix}
+
+%\renewcommand{\thesection}{Task \projnumber.\arabic{section}:}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%         exercise-specific macros       %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\mcall}[2]{#1(#2)}
+\newcommand{\call}[2]{\mcall{\textit{#1}}{#2}}
+\newcommand{\step}{\rightarrow}
+\newcommand{\nstep}{\overset{*}{\rightarrow}}
+\newcommand{\update}[3]{#1[#2 \mapsto #3]}
+\newcommand{\run}[2]{\llbracket #1 \rrbracket #2}
+\newcommand{\loweq}{\mathbin{=_L}}
+
+\newcommand{\config}[1]{\ensuremath{\left\langle #1 \right\rangle}\xspace}
+\newcommand{\ttt}[1]{\texttt{#1}}
+\newcommand{\proves}{\vdash}
+\newcommand{\sth}{\ensuremath{.\;}\xspace}
+\newcommand\set[1]{\ensuremath{\{#1\}}}
+\newcommand{\WHILE}[1]{\ensuremath{\mathsf{while}\ #1 \ \mathsf{do}}\xspace}
+\newcommand{\IF}{\ensuremath{\mathsf{if}}\xspace}
+\newcommand{\THEN}{\ensuremath{\mathsf{then}}\xspace}
+\newcommand{\ELSE}{\ensuremath{\mathsf{else}}\xspace}
+\newcommand{\SKIP}{\ensuremath{\mathsf{skip}}\xspace}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% This part needs customization from you %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% please enter your name and matriculation number here
+%TODO
+\newcommand{\name}{Benjamin Deutsch}
+\newcommand{\matriculation}{12215881}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%           End of customization         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\projnumber}{4}
+\newcommand{\Title}{Machine Learning Verification}
+\setlength{\headheight}{15.2pt}
+\setlength{\headsep}{20pt}
+\setlength{\textheight}{680pt}
+\pagestyle{fancy}
+\fancyhf{} 
+\fancyhead[L]{Project \projnumber\ -- \Title}
+\fancyhead[C]{}
+\fancyhead[R]{\name{} (\matriculation)}
+\renewcommand{\headrulewidth}{0.4pt}
+\fancyfoot[C]{\thepage}
+
+
+\begin{document}
+\thispagestyle{empty}
+\noindent\framebox[\linewidth]{%
+ \begin{minipage}{\linewidth}%
+ \hspace*{5pt} \textbf{Formal Methods for Security and Privacy (SS26)} \hfill Prof.~Matteo Maffei \hspace*{5pt}\\
+
+ \begin{center}
+  {\bf\Large Project \projnumber~-- \Title}
+ \end{center}
+
+ \vspace*{5pt}\hspace*{5pt}\name{} (\matriculation) \hfill TU Wien \hspace*{5pt}
+\end{minipage}%
+}
+\vspace{0.5cm}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% README
+% remember to fill the macros \matriculation and \name
+
+\setcounter{section}{3}
+\section*{Collision Avoidance}
+\subsection*{Project Task 4.1}
+\paragraph{Property 1 on 1\_9.} Marabou reports unsat on network 1\_9 given ACASXU\_property1.txt. This means, that 
+there are no inputs $x_1,\dots,x_4$ within the specified bounds such that the network 1\_9 outputs $y_0\dots,y_4$, 
+such that $y_2 \leq y_i$ for all $i \in \{0,1,3,4,5\}$. Therefore, in this large vertical separation scenario, the 
+network 1\_9 will never advise to turn right strongly.
+
+\paragraph{Property 1 on 2\_1.} Marabou reports sat on network 2\_1 given ACASXU\_property2.txt, since it found inputs 
+within the given bounds that result in $y_0 \geq y_i$ for all $i \in \{1,2,3,4,5\}$. 
+
+For the physical aircraft, this means that there could be an extremely distant intruder at significantly 
+slower speed than the ownship, where network 2\_1 judges that not evading is the worst option. If the aircraft then 
+followed the network's advice, it would make an unnecessary turn.
+
+This outcome is important for DNNs in aviation, as it reveals that the network 2\_1 does not behave as expected in the 
+specified case, which could lead to unsafe situations. The task description notes that previous approaches were validated 
+with 1.5 million simulated tests. Marabou found a specific point in the 5-dimensional input space that violates the 
+expected behaviour. Testing would almost certainly never sample this specific point, highlighting the importance of formal 
+verification of neural networks in safety-critical applications.
+
+
+\section*{MNIST Robustness: Network Size and Scalability}
+\subsection*{Project Task 5.1}
+\paragraph{The Epsilon Spectrum.} I got the following results when running Marabou on network mnist10x10 with 3600 seconds 
+timeout:
+\begin{itemize}
+    \item $\epsilon = 0.005$: unsat (0.064s)
+    \item $\epsilon = 0.05$: timeout
+    \item $\epsilon = 0.1$: sat (0.597s)
+\end{itemize}
+
+The unsat result for $\epsilon = 0.005$ means that the network is robust for this $\epsilon$-range, while the sat result for 
+$\epsilon = 0.1$ means that the network is not robust for this $\epsilon$-range, since Marabou found a counterexample. The 
+results therefore show that the robustness boundary of the network lies strictly between $\epsilon = 0.005$ and $\epsilon = 0.1$. 
+The timeout for $\epsilon = 0.05$ does not allow us to reduce the size of the $\epsilon$-boundary-interval.
+
+\paragraph{The Architecture Comparison.} I got the following results when running Marabou on network mnist6x256 with 3600 seconds 
+timeout:
+\begin{itemize}
+    \item $\epsilon = 0.005$: unsat (1.344s)
+    \item $\epsilon = 0.05$: sat (91.571s)
+    \item $\epsilon = 0.1$: sat (69.147s)
+\end{itemize}
+
+By the same reasoning as in the previous paragraph, the results show that the robustness boundary of the larger network 
+lies strictly between $\epsilon = 0.005$ and $\epsilon = 0.05$.
+
+\paragraph{Interpretation.}
+The larger network requires significantly more time to verify. For example, at $\epsilon = 0.005$, the smaller network is 
+verified in 0.064s, while the larger one takes 1.344s. More critically, at $\epsilon = 0.1$, the smaller network is verified 
+in 0.597s, while the larger one takes 69.147s. However, counterintuitively, the Marabou was able to verify the larger network 
+at $\epsilon = 0.05$, while it timed out for the smaller one. One speculation for this could be that the robustness boundary 
+of the smaller network is near $\epsilon = 0.05$. Usually, in optimization problems, the closer we are to the boundary, or 
+the optimal solution, the harder verification/solving becomes. Therefore, this could be an explanation for the timeout.
+
+The results show that the robustness boundary interval of the larger network is included in the interval of the smaller network. 
+Therefore, the larger network could be less robust than the smaller one, which is counterintuitive to me. One possible explanation 
+for this could be that the larger network fits the training data more precisely, potentially at the cost of robustness.
+
+In a safety-critical context both accuracy and formal verifiability are essential. A network which is highly accurate on benchmarks 
+but cannot be verified provides no safety guarantees. My approach would be to first set a minimum robustness threshold, driven by the 
+safety requirements of the task. Then, I would select the network that provides the best accuracy on the benchmarks that can be verified 
+for the given threshold.
+
+\section*{Final Synthesis}
+\subsection*{Project Task 6.1}
+When verifying a general safety rule, like in the ACAS Xu examples, the input space ($x$ constraints) is fixed to an 
+abstract scenario (e.g. intruder at a certain distance, speed, etc.). The output space ($y$ constraints) is then 
+defined by the specific safety rule we want to define, as can be seen from the ACAS Xu examples (e.g. to verify that 
+the network outputs that a certain option is not the worst, we constrain it to be the worst and check satisfiability).
+
+On the other hand, when verifying robustness, like in the MNIST examples, the input space is the $\epsilon$-range 
+around a specific input. For example, if the specific input has $x_0=0.1$, then the input space for $\epsilon=0.05$ 
+would be $x_0 \in [0.05, 0.15]$. Hence, the input constraints are then $0.05 \leq x_0 \leq 0.15$. The output space 
+encodes that some other class scores higher than the correct class (wrong classification). In the MNIST example, image2 represents a 4. 
+Therefore, there are 9 different verification queries for each $\epsilon$, checking whether the 4 is classified as a 
+0,1,2,3,5,6,7,8 or 9. If all these queries are unsat, then the network can robustly classify the image as a 4, given 
+the $\epsilon$.
+
+
+
+\end{document}
